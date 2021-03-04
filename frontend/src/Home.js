@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Home.css';
 import Navbar from './Navbar';
+import MarketplaceSearch from './MarketplaceSearch';
 
 export default class Home extends Component {
 	
@@ -17,7 +18,13 @@ export default class Home extends Component {
 					</div>
 				</div>
 				<div id="marketplace_container">
-				
+					<div id="marketplace_title">
+						<span>Buscar Influencias Locales</span>
+					</div>
+					<MarketplaceSearch />
+					<div id="marketplace_button">
+						<button>Registrate Para Ver Mas</button>
+					</div>
 				</div>
 			</>
 		);
