@@ -1,0 +1,18 @@
+#Nav_Container {
+	position: relative;
+	width: 100vw;
+	height: 10vh;
+	display: flex;
+}
+
+#logo {
+	width: 30vw;
+	height:10vh;
+}
+
+#nav_wrapper {
+	position: absolute;
+	right: 0;
+	width: 40vw;
+	height: 10vh;
+}

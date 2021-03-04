@@ -1,0 +1,35 @@
+#Title_Container {
+	position: relative;
+	width: 100vw;
+	height: 50vh;
+	background-color: #671FAE;
+	display: flex;
+	justify-content: center;
+}
+
+#Title_Wrapper{
+	position: absolute;
+	top: 10vh;
+	height: 30vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+}
+
+#Title_Wrapper span {
+	color: white;
+}
+
+#Title_Wrapper button {
+	background-color:white;
+	color: #671FAE;
+	font-size: 1.1rem;
+	font-weight: 600;
+	padding: 4px 8px;
+}
+
+#Title {
+	font-size: 2rem;
+	font-weight: 600;
+}
