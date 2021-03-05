@@ -12,7 +12,21 @@
 
 #nav_wrapper {
 	position: absolute;
-	right: 0;
-	width: 40vw;
+	right: 10vw;
+	width: 25vw;
 	height: 10vh;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+#nav_wrapper button {
+	background-color: #671FAE;
+	color: white;
+	padding: 4px 16px;
+	border-radius: 4px;
+}
+
+#nav_wrapper button:hover{
+	cursor: pointer;
 }

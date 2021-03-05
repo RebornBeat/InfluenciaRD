@@ -1,0 +1,64 @@
+#Login_Overlay {
+	position: fixed;
+	top:0;
+	left:0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+#Login_Container {
+	position: fixed;
+	top: 20vh;
+	left:35vw;
+	width: 30vw;
+	height: 60vh;
+	background-color: white;
+	border: solid;
+	border-color: #671FAE;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#Login__Title_Container {
+	width: 30vw;
+	height: 15vh;
+	font-size: 1.1rem;
+	font-weight: 500;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#Login_Info_Container {
+	width: 30vw;
+	height: 20vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+}
+
+#Login_Info_Container input {
+	width: 16vw;
+}
+
+#Login_Links_Container {
+	width: 17vw;
+	height: 10vh;
+	display: flex;
+	justify-content: space-between;
+}
+
+#Login_Links_Container span {
+	font-size: 0.6rem;
+}
+
+#Login__Button_Container {
+	width: 30vw;
+	height: 15vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
