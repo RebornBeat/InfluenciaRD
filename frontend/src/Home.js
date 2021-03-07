@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import './Home.css';
 import Navbar from './Navbar';
 import Login from './Login';
+import Register from './Register';
 import MarketplaceSearch from './MarketplaceSearch';
 
 export default class Home extends Component {
 	constructor(props) {
 	super(props);
-	this.state = {component: "Portal", key: ""};
+	this.state = {component: "Home", key: ""};
 	}
 	
 	callbackFunction = (componentName) => {
-		console.log(componentName)
 		this.setState({component: componentName});
 
 	}
@@ -41,6 +41,7 @@ export default class Home extends Component {
 					</div>
 				</div>
 				{ this.state.component == "Login" && <Login parentCallback = {this.callbackFunction} /> }
+				{ this.state.component == "Register" && <Register parentCallback = {this.callbackFunction} /> }
 			</>
 		);
 		

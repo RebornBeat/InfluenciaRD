@@ -14,11 +14,31 @@
 	width: 30vw;
 	height: 60vh;
 	background-color: white;
+	background: url("./Background.svg") white; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 	border: solid;
 	border-color: #671FAE;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+}
+
+.exit {
+	position: absolute;
+	top: 2vh;
+	right: 2vw;
+	width: 1.5vw;
+	height: 3vh;
+	display: block;
+	background: url("./exit.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.exit:hover {
+	cursor: pointer;
 }
 
 #Login__Title_Container {
@@ -29,6 +49,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	color: white;
 }
 
 #Login_Info_Container {
@@ -47,18 +68,55 @@
 #Login_Links_Container {
 	width: 17vw;
 	height: 10vh;
-	display: flex;
-	justify-content: space-between;
 }
 
 #Login_Links_Container span {
-	font-size: 0.6rem;
+	font-size: 0.7rem;
+	color: blue;
+}
+
+#Login_Links_Container span:hover {
+	cursor: pointer;
 }
 
 #Login__Button_Container {
 	width: 30vw;
 	height: 15vh;
 	display: flex;
+	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-evenly;
+}
+
+#Login__Button_Container button {
+	background-color: #671FAE;
+	font-weight: 500;
+	color: white;
+	padding: 4px 16px;
+	border-radius: 4px;
+}
+
+#Login__Button_Container button:hover {
+	cursor: pointer;
+}
+
+#Register__Button_Container {
+	width: 30vw;
+	height: 25vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+}
+
+#Register__Button_Container button {
+	background-color: #671FAE;
+	font-weight: 500;
+	color: white;
+	padding: 4px 16px;
+	border-radius: 4px;
+}
+
+#Register__Button_Container button:hover {
+	cursor: pointer;
 }

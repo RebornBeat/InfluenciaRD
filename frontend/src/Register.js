@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './Login.css';
 
-export default class Login extends Component {
+export default class Register extends Component {
 	constructor(props) {
 	super(props);
 	this.state = { Email: "", Password: ""};
@@ -36,12 +36,10 @@ export default class Login extends Component {
 				}
 			});
 		}
-		
-		if ( e.target.id === "Login_Register" ) {
-			console.log("Register")
-			this.props.parentCallback("Register");
+
+		if ( e.target.id === "Register_Login" ) {
+			this.props.parentCallback("Login");
 		}
-		
 		
 	}
 	
@@ -54,18 +52,17 @@ export default class Login extends Component {
 						<div id="Login__Title_Container">
 							{/* If exit button clicked exit out of login display */} 
 							<span id="Login_Exit" className="exit" onClick={this.onClick.bind(this)} ></span>
-							<span> Login </span>
+							<span> Register </span>
 						</div>
 						<div id="Login_Info_Container">
 							<input type="text" id="Email_Input" placeholder="E-mail" onChange={this.handleChange.bind(this)} ></input>
+							<input type="text" id="Full Name" placeholder="Full Name" onChange={this.handleChange.bind(this)} ></input>
 							<input type="text" id="Password_Input" placeholder="Password" onChange={this.handleChange.bind(this)} ></input>
+							<input type="text" id="RePassword_Input" placeholder="Retype Password" onChange={this.handleChange.bind(this)} ></input>
 						</div>
-						<div id="Login_Links_Container">
-							<span>Forgot Password?</span>
-						</div>
-						<div id="Login__Button_Container">
-							<button id="Login_Submit" onClick={this.onClick.bind(this)} > Enter </button>
-							<button id="Login_Register" onClick={this.onClick.bind(this)}> Register </button>
+						<div id="Register__Button_Container">
+							<button id="Register_Submit" onClick={this.onClick.bind(this)} > Enter </button>
+							<button id="Register_Login" onClick={this.onClick.bind(this)}> Login </button>
 						</div>
 					</div>
 				</div>
