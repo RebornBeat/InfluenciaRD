@@ -5,7 +5,7 @@ import './Login.css';
 export default class Register extends Component {
 	constructor(props) {
 	super(props);
-	this.state = { Email: "", Password: ""};
+	this.state = { Email: "", FName: "", Password: "", RePassword: ""};
 	}
 	
 	
@@ -15,8 +15,16 @@ export default class Register extends Component {
 			this.setState({Email: e.target.value})
 		}
 		
+		if ( e.target.id === "FName" ) {
+			this.setState({FName: e.target.value})
+		}
+		
 		if ( e.target.id === "Password_Input" ) {
 			this.setState({Password: e.target.value})
+		}
+		
+		if ( e.target.id === "RePassword_Input" ) {
+			this.setState({RePassword: e.target.value})
 		}
 		
 	}
@@ -26,11 +34,11 @@ export default class Register extends Component {
 			this.props.parentCallback("Home");
 		}
 		
-		if ( e.target.id === "Login_Submit" ) {
-			let data = { Email: this.state.Email, Pass: this.state.Password }
-			axios.post(`/login/`, { data }).then((res) =>  {
+		if ( e.target.id === "Register_Submit" ) {
+			let data = { Email: this.state.Email, Pass: this.state.Password, rePass: this.state.RePassword}
+			axios.post(`/register/`, { data }).then((res) =>  {
 				if ( res.data.details != "accepted" ){
-					
+					console.log(res.data.details)
 				} else {
 					this.props.parentCallback("Home");
 				}
@@ -56,7 +64,7 @@ export default class Register extends Component {
 						</div>
 						<div id="Login_Info_Container">
 							<input type="text" id="Email_Input" placeholder="E-mail" onChange={this.handleChange.bind(this)} ></input>
-							<input type="text" id="Full Name" placeholder="Full Name" onChange={this.handleChange.bind(this)} ></input>
+							<input type="text" id="FName" placeholder="Full Name" onChange={this.handleChange.bind(this)} ></input>
 							<input type="text" id="Password_Input" placeholder="Password" onChange={this.handleChange.bind(this)} ></input>
 							<input type="text" id="RePassword_Input" placeholder="Retype Password" onChange={this.handleChange.bind(this)} ></input>
 						</div>

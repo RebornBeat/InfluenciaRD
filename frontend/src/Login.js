@@ -30,7 +30,7 @@ export default class Login extends Component {
 			let data = { Email: this.state.Email, Pass: this.state.Password }
 			axios.post(`/login/`, { data }).then((res) =>  {
 				if ( res.data.details != "accepted" ){
-					
+					console.log(res.data.details)
 				} else {
 					this.props.parentCallback("Home");
 				}

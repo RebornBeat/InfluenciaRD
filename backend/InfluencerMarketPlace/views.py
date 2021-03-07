@@ -38,7 +38,7 @@ def register_request(request):
                 if "@" in data["Email"]:
                     startslice = data["Email"].find("@")
                     endslice = len(data["Email"])
-                    slicedemail = data["Email"][slicestart:endslice]
+                    slicedemail = data["Email"][startslice:endslice]
                     if "." in slicedemail:  
                         User.objects.create_user(username=data["Email"], password=data["Pass"])
                         user = authenticate(request, username=data["Email"], password=data["Pass"])
