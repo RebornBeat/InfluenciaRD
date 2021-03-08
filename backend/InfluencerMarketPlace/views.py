@@ -15,10 +15,10 @@ def login_request(request):
     data = json.loads(request.body.decode('utf-8'))["data"]
     if request.method =="POST":
         try:
-            u = User.objects.get(username=data["Uname"])
+            u = User.objects.get(username=data["Email"])
         except:
             return JsonResponse({'details': "E-mail is not Registered"})
-        user = authenticate(request, username=data["Uname"], password=data["Pass"])
+        user = authenticate(request, username=data["Email"], password=data["Pass"])
         if user is not None:
             login(request, user)
             return JsonResponse({'details': "accepted"})
@@ -33,7 +33,7 @@ def register_request(request):
         if data["Pass"] == data["rePass"]:
             try:
                 u = User.objects.get(username=data["Email"])
-                return JsonResponse({'details': "in_use"})
+                return JsonResponse({'details': "Email is in Use"})
             except:
                 if "@" in data["Email"]:
                     startslice = data["Email"].find("@")

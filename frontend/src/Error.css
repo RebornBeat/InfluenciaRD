@@ -1,0 +1,14 @@
+#Error_Container {
+	position: relative;
+	height: 10vh;
+	width: 30vw;
+	top: 5vh;
+	left: 35vw;
+	background: white;
+	border: solid;
+	border-color: red;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 500;
+}

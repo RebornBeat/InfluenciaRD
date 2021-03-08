@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './Login.css';
+import Error from './Error';
 
 export default class Login extends Component {
 	constructor(props) {
 	super(props);
-	this.state = { Email: "", Password: ""};
+	this.state = { Email: "", Password: "", Error: ""};
 	}
 	
 	
@@ -30,7 +31,7 @@ export default class Login extends Component {
 			let data = { Email: this.state.Email, Pass: this.state.Password }
 			axios.post(`/login/`, { data }).then((res) =>  {
 				if ( res.data.details != "accepted" ){
-					console.log(res.data.details)
+					this.setState({Error: res.data.details})
 				} else {
 					this.props.parentCallback("Home");
 				}
@@ -50,6 +51,7 @@ export default class Login extends Component {
 		return (
 			<>
 				<div id="Login_Overlay">
+					{ this.state.Error != "" && <Error ErrorMsg = {this.state.Error} /> }
 					<div id="Login_Container">
 						<div id="Login__Title_Container">
 							{/* If exit button clicked exit out of login display */} 
