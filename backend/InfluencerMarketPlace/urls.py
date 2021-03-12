@@ -6,6 +6,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('login/', views.login_request, name='login_request'),
     path('register/', views.register_request, name='register_request'),
-    path('ran5/', views.ran_filter, name='ran_filter'),
+    path('initialSearch/', views.initialSearch, name='initialSearch'),
     path('filter/', views.course_filter, name='course_filter'),
 ]

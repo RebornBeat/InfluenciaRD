@@ -15,15 +15,22 @@
 #InfluencerListing_Container{
 	width: 50vw;
 	height: 70vh;
+	background: url("./Background.svg") white; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 	border: solid;
 	border-color: #671FAE;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
+	overflow-x: hidden;
 }
 
 .User_Container {
+	position: relative;
+	margin-top: 2vh;
 	width: 50vw;
 	height: 12.5vh;
-	border: solid;
+	border-top: solid;
+	border-bottom: solid;
+	border-color: #671FAE;
+	background: white;
 }

@@ -56,13 +56,15 @@ def register_request(request):
     return JsonResponse(data)
 
 @csrf_exempt
-def ran_filter(request):
+def initialSearch(request):
     if request.method =="POST":
+        print(request.user)
+        print(request.user.username)
         # Get top 5 with highest follower count and return
         allSet = UserInfo.objects.all()
         setLength = len(allSet) - 1
         choosenIndexes = []
-        ran5Set = []
+        ranList = []
         while True:
             currentIndex = 0
             while True:
@@ -71,13 +73,25 @@ def ran_filter(request):
                     currentIndex = randomIndex
                     choosenIndexes.append(currentIndex)
                     break
-            ran5Set.append(allSet[currentIndex])
-            if len(ran5Set) == 5:
+            ranList.append(allSet[currentIndex])
+            if len(ranList) == 5:
+                if request.user:
+                    pass
+                else:
+                    break
+            if len(ranList) == 20:
                 break
-        ran5 = {}
-        for i in ran5Set:
-            ran5[i.InstaName] = { "Email" : i.LinkedEmail, "Followers" : i.FollowerCount, "Cost" : i.Cost}
-        return JsonResponse(ran5)
+            if len(ranList) == len(allSet):
+                break
+        ranSet = {}
+        if request.user:
+            ranSet["Logged"] = "True"
+            ranSet["seenIndexes"] = choosenIndexes
+        else:
+            ranSet["Logged"] = "False"
+        for i in ranList:
+            ranSet[i.InstaName] = { "Email" : i.LinkedEmail, "Followers" : i.FollowerCount, "Cost" : i.Cost}
+        return JsonResponse(ranSet)
 
 @csrf_exempt
 def course_filter(request):
