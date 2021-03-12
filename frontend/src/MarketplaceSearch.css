@@ -27,10 +27,29 @@
 .User_Container {
 	position: relative;
 	margin-top: 2vh;
-	width: 50vw;
+	width: 49vw;
 	height: 12.5vh;
 	border-top: solid;
 	border-bottom: solid;
 	border-color: #671FAE;
 	background: white;
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.User_Child {
+	height: 12.5vh;
+	width: 8.3vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.User_Child button {
+	font-weight: 600;
+	background-color: #671FAE;
+	color: white;
+	padding: 8px 16px;
+	border-radius: 2px;
+	border: none;
 }

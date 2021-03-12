@@ -10,8 +10,17 @@ export class DisplayFetch extends Component {
 		
 		for ( let i in this.props.data ) {
 			if ( i !== "Logged" && i !== "seenIndexes" ) {
+				console.log(i)
 				userList.push(
-					<div className="User_Container"></div>
+					<div className="User_Container">
+						<div className="User_Profile_Pic User_Child"></div>
+						<div className="User_Name User_Child">{i}</div>
+						<div className="User_Followers User_Child">{this.props.data[i].Followers}</div>
+						<div className="User_Cost User_Child">${this.props.data[i].Cost}</div>
+						<div className="User_Contact User_Child">
+							<button>Contact</button>
+						</div>
+					</div>
 				)
 			}
 		}
@@ -36,7 +45,6 @@ export default class MarketplaceSearch extends Component {
 	componentDidMount() {
 		{/* If user is not logged in then display a list of 5 random users else display 20 random users at a time */} 
 		axios.post(`/initialSearch/`).then((res) =>  {
-			console.log(res.data.seenIndexes)
 			this.setState({ data: res.data, fetched: true, seenIndexes: res.data.seenIndexes })
 		}) 
 	}
