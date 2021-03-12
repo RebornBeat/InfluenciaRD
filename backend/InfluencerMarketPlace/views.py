@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from .models import UserInfo
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
+import random
 
 # Create your views here.
 
@@ -54,10 +56,33 @@ def register_request(request):
     return JsonResponse(data)
 
 @csrf_exempt
+def ran_filter(request):
+    if request.method =="POST":
+        # Get top 5 with highest follower count and return
+        allSet = UserInfo.objects.all()
+        setLength = len(allSet) - 1
+        choosenIndexes = []
+        ran5Set = []
+        while True:
+            currentIndex = 0
+            while True:
+                randomIndex = random.randint(0, setLength)
+                if randomIndex not in choosenIndexes:
+                    currentIndex = randomIndex
+                    choosenIndexes.append(currentIndex)
+                    break
+            ran5Set.append(allSet[currentIndex])
+            if len(ran5Set) == 5:
+                break
+        ran5 = {}
+        for i in ran5Set:
+            ran5[i.InstaName] = { "Email" : i.LinkedEmail, "Followers" : i.FollowerCount, "Cost" : i.Cost}
+        return JsonResponse(ran5)
+
+@csrf_exempt
 def course_filter(request):
     data = json.loads(request.body.decode('utf-8'))["data"]
     if request.method =="POST":
-
         null_keys = []
         for i in data:
             if data[i] == "n/a":

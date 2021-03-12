@@ -17,4 +17,13 @@
 	height: 70vh;
 	border: solid;
 	border-color: #671FAE;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+.User_Container {
+	width: 50vw;
+	height: 12.5vh;
+	border: solid;
 }
