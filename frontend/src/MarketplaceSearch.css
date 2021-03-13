@@ -10,6 +10,65 @@
 	height: 70vh;
 	border: solid;	
 	border-color: #671FAE;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+#Seguidores_Container {
+	width: 30vw;
+	height: 17.5vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+
+#Interest_Container {
+	width: 30vw;
+	height: 28vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#Interest_Title {
+	height: 4.8vh;
+	width: 27vw;
+	display: flex;
+	align-items: center;
+	font-weight: 500;
+}
+
+#Costo_Container {
+	width: 30vw;
+	height: 17.5vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.Seguidores_Costo_Title{
+	height: 5.8vh;
+	width: 27vw;
+	display: flex;
+	align-items: center;
+	font-weight: 500;
+}
+
+.Section_Containers {
+	height: 5.8vh;
+	width: 27vw;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.Section_Content_Containers {
+	height: 4.6vh;
+	width: 6.7vw;
+	border: solid;
+	border-color: #671FAE;
 }
 
 #InfluencerListing_Container{
@@ -43,13 +102,23 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	font-weight: 500;
+}
+
+.Profile_Pic {
+	height: 3.8rem;
+	width: 3.8rem;
+	border: solid;
+	border-color: #671FAE;
+	border-radius: 50%;
 }
 
 .User_Child button {
 	font-weight: 600;
 	background-color: #671FAE;
 	color: white;
-	padding: 8px 16px;
+	padding: 0.6rem 0.8rem;
 	border-radius: 2px;
 	border: none;
 }
+

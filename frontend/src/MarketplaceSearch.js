@@ -13,12 +13,14 @@ export class DisplayFetch extends Component {
 				console.log(i)
 				userList.push(
 					<div className="User_Container">
-						<div className="User_Profile_Pic User_Child"></div>
-						<div className="User_Name User_Child">{i}</div>
+						<div className="User_Profile_Pic_Container User_Child">
+							<div className="Profile_Pic"></div>
+						</div>
+						<div className="User_Name User_Child">@{i}</div>
 						<div className="User_Followers User_Child">{this.props.data[i].Followers}</div>
 						<div className="User_Cost User_Child">${this.props.data[i].Cost}</div>
 						<div className="User_Contact User_Child">
-							<button>Contact</button>
+							<button>Contactar</button>
 						</div>
 					</div>
 				)
@@ -55,6 +57,79 @@ export default class MarketplaceSearch extends Component {
 			<div id="MarketplaceSearch_Container">
 				<div id="InfluencerFilter_Container">
 				 {/* If a filter is selected obtain all filters and fetch results based on filters */} 
+					<div id="Seguidores_Container">
+						<div className="Seguidores_Costo_Title"># de seguidores</div>
+						<div className="Section_Containers">
+							<div className="Section_Content_Containers">
+							</div>
+							<div className="Section_Content_Containers">
+							</div>
+							<div className="Section_Content_Containers">
+							</div>
+						</div>
+						<div className="Section_Containers">
+							<div className="Section_Content_Containers">
+							</div>
+							<div className="Section_Content_Containers">
+							</div>
+							<div className="Section_Content_Containers">
+							</div>
+						</div>
+					</div>
+					<div id="Interest_Container">
+						<div id="Interest_Title">Interés</div>
+						<div className="Section_Containers">
+							<div className="Section_Content_Containers">
+							</div>
+							<div className="Section_Content_Containers">
+							</div>
+							<div className="Section_Content_Containers">
+							</div>
+						</div>
+						<div className="Section_Containers">
+							<div className="Section_Content_Containers">
+							</div>
+							<div className="Section_Content_Containers">
+							</div>
+							<div className="Section_Content_Containers">
+							</div>
+						</div>
+						<div className="Section_Containers">
+							<div className="Section_Content_Containers">
+							</div>
+							<div className="Section_Content_Containers">
+							</div>
+							<div className="Section_Content_Containers">
+							</div>
+						</div>
+						<div className="Section_Containers">
+							<div className="Section_Content_Containers">
+							</div>
+							<div className="Section_Content_Containers">
+							</div>
+							<div className="Section_Content_Containers">
+							</div>
+						</div>
+					</div>
+					<div id="Costo_Container">
+						<div className="Seguidores_Costo_Title">Costo</div>
+						<div className="Section_Containers">
+							<div className="Section_Content_Containers">
+							</div>
+							<div className="Section_Content_Containers">
+							</div>
+							<div className="Section_Content_Containers">
+							</div>
+						</div>
+						<div className="Section_Containers">
+							<div className="Section_Content_Containers">
+							</div>
+							<div className="Section_Content_Containers">
+							</div>
+							<div className="Section_Content_Containers">
+							</div>
+						</div>
+					</div>
 				</div>
 				<div id="InfluencerListing_Container">
 				{/* Starting off display the top 5 influencers with the most views then display based on filters on ComponentMount*/} 
