@@ -60,55 +60,37 @@ export default class MarketplaceSearch extends Component {
 					<div id="Seguidores_Container">
 						<div className="Seguidores_Costo_Title"># de seguidores</div>
 						<div className="Section_Containers">
-							<div className="Section_Content_Containers">
-							</div>
-							<div className="Section_Content_Containers">
-							</div>
-							<div className="Section_Content_Containers">
-							</div>
+							<div className="Section_Content_Containers">0-500</div>
+							<div className="Section_Content_Containers">501-5k</div>
+							<div className="Section_Content_Containers">5k-20k</div>
 						</div>
 						<div className="Section_Containers">
-							<div className="Section_Content_Containers">
-							</div>
-							<div className="Section_Content_Containers">
-							</div>
-							<div className="Section_Content_Containers">
-							</div>
+							<div className="Section_Content_Containers">20k-50k</div>
+							<div className="Section_Content_Containers">50k-100k</div>
+							<div className="Section_Content_Containers">100k-500k</div>
 						</div>
 					</div>
 					<div id="Interest_Container">
 						<div id="Interest_Title">Interés</div>
 						<div className="Section_Containers">
-							<div className="Section_Content_Containers">
-							</div>
-							<div className="Section_Content_Containers">
-							</div>
-							<div className="Section_Content_Containers">
-							</div>
+							<div className="Section_Content_Containers">Comida</div>
+							<div className="Section_Content_Containers">Peliculas</div>
+							<div className="Section_Content_Containers">Belleza</div>
 						</div>
 						<div className="Section_Containers">
-							<div className="Section_Content_Containers">
-							</div>
-							<div className="Section_Content_Containers">
-							</div>
-							<div className="Section_Content_Containers">
-							</div>
+							<div className="Section_Content_Containers">Autos</div>
+							<div className="Section_Content_Containers">Deportes</div>
+							<div className="Section_Content_Containers">Juegos</div>
 						</div>
 						<div className="Section_Containers">
-							<div className="Section_Content_Containers">
-							</div>
-							<div className="Section_Content_Containers">
-							</div>
-							<div className="Section_Content_Containers">
-							</div>
+							<div className="Section_Content_Containers"></div>
+							<div className="Section_Content_Containers"></div>
+							<div className="Section_Content_Containers"></div>
 						</div>
 						<div className="Section_Containers">
-							<div className="Section_Content_Containers">
-							</div>
-							<div className="Section_Content_Containers">
-							</div>
-							<div className="Section_Content_Containers">
-							</div>
+							<div className="Section_Content_Containers"></div>
+							<div className="Section_Content_Containers"></div>
+							<div className="Section_Content_Containers"></div>
 						</div>
 					</div>
 					<div id="Costo_Container">

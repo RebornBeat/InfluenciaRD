@@ -69,6 +69,15 @@
 	width: 6.7vw;
 	border: solid;
 	border-color: #671FAE;
+	display: flex; 
+	align-items: center;
+	justify-content: center;
+}
+
+.Section_Content_Containers:hover {
+	background: #671FAE;
+	color: white;
+	cursor: pointer;
 }
 
 #InfluencerListing_Container{
