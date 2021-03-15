@@ -10,7 +10,6 @@ export class DisplayFetch extends Component {
 		
 		for ( let i in this.props.data ) {
 			if ( i !== "Logged" && i !== "seenIndexes" ) {
-				console.log(i)
 				userList.push(
 					<div className="User_Container">
 						<div className="User_Profile_Pic_Container User_Child">
@@ -47,8 +46,65 @@ export default class MarketplaceSearch extends Component {
 	componentDidMount() {
 		{/* If user is not logged in then display a list of 5 random users else display 20 random users at a time */} 
 		axios.post(`/initialSearch/`).then((res) =>  {
-			this.setState({ data: res.data, fetched: true, seenIndexes: res.data.seenIndexes })
+			this.setState({ data: res.data, fetched: true, seenIndexes: res.data.seenIndexes, selectedFiltersFollowers: [], selectedFiltersInterest: [], selectedFiltersCost: [] })
 		}) 
+	}
+	
+	onClick (e) {
+		{/* Check Section in which Event belongs to and if stored in state then remove else add and change CSS accordingly */} 
+		if ( e.target.parentElement.className.includes('Follower_Filter') ) {
+			
+			if ( this.state.selectedFiltersFollowers.includes( e.target.innerHTML ) ) {
+				let ExistingList = this.state.selectedFiltersFollowers
+				let selectedIndex = ExistingList.indexOf(e.target.innerHTML)
+				ExistingList.splice(selectedIndex, 1)
+				e.target.style.background = "white"
+				e.target.style.color = "black"
+			} else {
+				let addList = [e.target.innerHTML]
+				let newList = this.state.selectedFiltersFollowers.concat(addList)
+				this.setState({selectedFiltersFollowers: newList })
+				e.target.style.background = "#671FAE"
+				e.target.style.color = "white"
+			}
+			
+		}
+		
+		if ( e.target.parentElement.className.includes('Interest_Filter') ) {
+
+			if ( this.state.selectedFiltersInterest.includes( e.target.innerHTML ) ) {
+				let ExistingList = this.state.selectedFiltersInterest
+				let selectedIndex = ExistingList.indexOf(e.target.innerHTML)
+				ExistingList.splice(selectedIndex, 1)
+				e.target.style.background = "white"
+				e.target.style.color = "black"
+			} else {
+				let addList = [e.target.innerHTML]
+				let newList = this.state.selectedFiltersInterest.concat(addList)
+				this.setState({selectedFiltersInterest: newList })
+				e.target.style.background = "#671FAE"
+				e.target.style.color = "white"
+			}
+			
+		}
+		
+		if ( e.target.parentElement.className.includes('Cost_Filter') ) {
+
+			if ( this.state.selectedFiltersCost.includes( e.target.innerHTML ) ) {
+				let ExistingList = this.state.selectedFiltersCost
+				let selectedIndex = ExistingList.indexOf(e.target.innerHTML)
+				ExistingList.splice(selectedIndex, 1)
+				e.target.style.background = "white"
+				e.target.style.color = "black"
+			} else {
+				let addList = [e.target.innerHTML]
+				let newList = this.state.selectedFiltersCost.concat(addList)
+				this.setState({selectedFiltersCost: newList })
+				e.target.style.background = "#671FAE"
+				e.target.style.color = "white"
+			}
+			
+		}
 	}
 	
 	render () {
@@ -59,43 +115,43 @@ export default class MarketplaceSearch extends Component {
 				 {/* If a filter is selected obtain all filters and fetch results based on filters */} 
 					<div id="Seguidores_Container">
 						<div className="Seguidores_Costo_Title"># de seguidores</div>
-						<div className="Section_Containers">
-							<div className="Section_Content_Containers">0-500</div>
-							<div className="Section_Content_Containers">501-5k</div>
-							<div className="Section_Content_Containers">5k-20k</div>
+						<div className="Section_Containers Follower_Filter">
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>0-500</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>501-5k</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>5k-20k</div>
 						</div>
-						<div className="Section_Containers">
-							<div className="Section_Content_Containers">20k-50k</div>
-							<div className="Section_Content_Containers">50k-100k</div>
-							<div className="Section_Content_Containers">100k-500k</div>
+						<div className="Section_Containers Follower_Filter">
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>20k-50k</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>50k-100k</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>100k-500k</div>
 						</div>
 					</div>
 					<div id="Interest_Container">
 						<div id="Interest_Title">Interés</div>
-						<div className="Section_Containers">
-							<div className="Section_Content_Containers">Comida</div>
-							<div className="Section_Content_Containers">Peliculas</div>
-							<div className="Section_Content_Containers">Belleza</div>
+						<div className="Section_Containers Interest_Filter">
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Comida</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Peliculas</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Belleza</div>
 						</div>
-						<div className="Section_Containers">
-							<div className="Section_Content_Containers">Autos</div>
-							<div className="Section_Content_Containers">Deportes</div>
-							<div className="Section_Content_Containers">Juegos</div>
+						<div className="Section_Containers Interest_Filter">
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Autos</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Deportes</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Juegos</div>
 						</div>
-						<div className="Section_Containers">
-							<div className="Section_Content_Containers"></div>
-							<div className="Section_Content_Containers"></div>
-							<div className="Section_Content_Containers"></div>
+						<div className="Section_Containers Interest_Filter">
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Viajes</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Moda</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Salud</div>
 						</div>
-						<div className="Section_Containers">
-							<div className="Section_Content_Containers"></div>
-							<div className="Section_Content_Containers"></div>
-							<div className="Section_Content_Containers"></div>
+						<div className="Section_Containers Interest_Filter">
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Crianza</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Negocio</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Fotografía</div>
 						</div>
 					</div>
 					<div id="Costo_Container">
 						<div className="Seguidores_Costo_Title">Costo</div>
-						<div className="Section_Containers">
+						<div className="Section_Containers Cost_Filter">
 							<div className="Section_Content_Containers">
 							</div>
 							<div className="Section_Content_Containers">
@@ -103,7 +159,7 @@ export default class MarketplaceSearch extends Component {
 							<div className="Section_Content_Containers">
 							</div>
 						</div>
-						<div className="Section_Containers">
+						<div className="Section_Containers Cost_Filter">
 							<div className="Section_Content_Containers">
 							</div>
 							<div className="Section_Content_Containers">

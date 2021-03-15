@@ -90,7 +90,7 @@ def initialSearch(request):
         else:
             ranSet["Logged"] = "False"
         for i in ranList:
-            ranSet[i.InstaName] = { "Email" : i.LinkedEmail, "Followers" : i.FollowerCount, "Cost" : i.Cost}
+            ranSet[i.InstaName] = {"Followers" : i.FollowerCount, "Cost" : i.Cost}
         return JsonResponse(ranSet)
 
 @csrf_exempt
