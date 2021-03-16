@@ -52,6 +52,9 @@ export default class MarketplaceSearch extends Component {
 	
 	onClick (e) {
 		{/* Check Section in which Event belongs to and if stored in state then remove else add and change CSS accordingly */} 
+
+		let data = undefined
+
 		if ( e.target.parentElement.className.includes('Follower_Filter') ) {
 			
 			if ( this.state.selectedFiltersFollowers.includes( e.target.innerHTML ) ) {
@@ -60,12 +63,14 @@ export default class MarketplaceSearch extends Component {
 				ExistingList.splice(selectedIndex, 1)
 				e.target.style.background = "white"
 				e.target.style.color = "black"
+				data = { selectedFiltersFollowers: this.state.selectedFiltersFollowers, selectedFiltersInterest: this.state.selectedFiltersInterest, selectedFiltersCost: this.state.selectedFiltersCost}
 			} else {
 				let addList = [e.target.innerHTML]
 				let newList = this.state.selectedFiltersFollowers.concat(addList)
 				this.setState({selectedFiltersFollowers: newList })
 				e.target.style.background = "#671FAE"
 				e.target.style.color = "white"
+				data = { selectedFiltersFollowers: newList, selectedFiltersInterest: this.state.selectedFiltersInterest, selectedFiltersCost: this.state.selectedFiltersCost}
 			}
 			
 		}
@@ -78,12 +83,14 @@ export default class MarketplaceSearch extends Component {
 				ExistingList.splice(selectedIndex, 1)
 				e.target.style.background = "white"
 				e.target.style.color = "black"
+				data = { selectedFiltersFollowers: this.state.selectedFiltersFollowers, selectedFiltersInterest: this.state.selectedFiltersInterest, selectedFiltersCost: this.state.selectedFiltersCost}
 			} else {
 				let addList = [e.target.innerHTML]
 				let newList = this.state.selectedFiltersInterest.concat(addList)
 				this.setState({selectedFiltersInterest: newList })
 				e.target.style.background = "#671FAE"
 				e.target.style.color = "white"
+				data = { selectedFiltersFollowers: this.state.selectedFiltersFollowers, selectedFiltersInterest: newList, selectedFiltersCost: this.state.selectedFiltersCost}
 			}
 			
 		}
@@ -96,15 +103,20 @@ export default class MarketplaceSearch extends Component {
 				ExistingList.splice(selectedIndex, 1)
 				e.target.style.background = "white"
 				e.target.style.color = "black"
+				data = { selectedFiltersFollowers: this.state.selectedFiltersFollowers, selectedFiltersInterest: this.state.selectedFiltersInterest, selectedFiltersCost: this.state.selectedFiltersCost}
 			} else {
 				let addList = [e.target.innerHTML]
 				let newList = this.state.selectedFiltersCost.concat(addList)
 				this.setState({selectedFiltersCost: newList })
 				e.target.style.background = "#671FAE"
 				e.target.style.color = "white"
+				data = { selectedFiltersFollowers: this.state.selectedFiltersFollowers, selectedFiltersInterest: this.state.selectedFiltersInterest, selectedFiltersCost: newList}
 			}
 			
 		}
+		
+		axios.post(`/filteredSearch/`, { data }).then((res) =>  {
+		}) 
 	}
 	
 	render () {

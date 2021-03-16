@@ -58,8 +58,6 @@ def register_request(request):
 @csrf_exempt
 def initialSearch(request):
     if request.method =="POST":
-        print(request.user)
-        print(request.user.username)
         # Get top 5 with highest follower count and return
         allSet = UserInfo.objects.all()
         setLength = len(allSet) - 1
@@ -94,22 +92,8 @@ def initialSearch(request):
         return JsonResponse(ranSet)
 
 @csrf_exempt
-def course_filter(request):
+def filteredSearch(request):
     data = json.loads(request.body.decode('utf-8'))["data"]
     if request.method =="POST":
-        null_keys = []
-        for i in data:
-            if data[i] == "n/a":
-                null_keys.append(i)
-        for i in null_keys:
-            del data[i]
-        filter_list = []
-        # Append each value from data into the filter_list
-        for i in data:
-            filter_list.append(data[i])
-        course_dict = {}
-        if len(filter_list) != 0:
-            all_course = Course.objects.filter(availabeTag__has_keys=filter_list)
-            for i in all_course:
-                course_dict[i.pk] = { "title": i.title,  "filledSlot": i.filledSlot, "maxSlot": i.maxSlot, "startDate": i.startDate, "tags": i.availabeTag, "description": i.description}
-    return JsonResponse(course_dict)
+        print(data)
+    return JsonResponse({'details': "accepted"})
