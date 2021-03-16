@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from .models import UserInfo
+from .models import UserInfo, Interest
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 import json
@@ -89,11 +89,18 @@ def initialSearch(request):
             ranSet["Logged"] = "False"
         for i in ranList:
             ranSet[i.InstaName] = {"Followers" : i.FollowerCount, "Cost" : i.Cost}
+            print(i.interests.all())
+        for i in Interest.objects.all():
+            print(i.userinfo_set.all())
         return JsonResponse(ranSet)
 
 @csrf_exempt
 def filteredSearch(request):
     data = json.loads(request.body.decode('utf-8'))["data"]
     if request.method =="POST":
-        print(data)
+        if len(data["selectedFiltersInterest"]) != 0:
+            chainedFilter = UserInfo.objects
+            for i in data["selectedFiltersInterest"]:
+                chainedFilter = chainedFilter.filter(interests__name=i)
+            print("Final Filter", chainedFilter)
     return JsonResponse({'details': "accepted"})
