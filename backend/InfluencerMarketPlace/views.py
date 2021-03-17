@@ -71,6 +71,7 @@ def initialSearch(request):
                     currentIndex = randomIndex
                     choosenIndexes.append(currentIndex)
                     break
+            #Make one get call with the list of Indexes instead of appending one by one.
             ranList.append(allSet[currentIndex])
             if len(ranList) == 5:
                 if request.user:
@@ -98,9 +99,30 @@ def initialSearch(request):
 def filteredSearch(request):
     data = json.loads(request.body.decode('utf-8'))["data"]
     if request.method =="POST":
+        chainedFilter = UserInfo.objects
+        if len(data["selectedFiltersFollowers"]) != 0:
+            for i in data["selectedFiltersFollowers"]:
+                Gteendslice = i.find("-")
+                GteNumber = i[0:Gteendslice]
+                Ltestartslice = i.find("-") + 1
+                Lteendslice = len(i)
+                LteNumber = i[Ltestartslice:Lteendslice]
+                addedK = "000"
+                if "k" in GteNumber:
+                    GteNumber = GteNumber.replace("k", "")
+                    GteNumber = int(GteNumber + addedK)
+                if "k" in LteNumber:
+                    LteNumber = LteNumber.replace("k", "")
+                    LteNumber = int(LteNumber + addedK)
+                chainedFilter = chainedFilter.filter(FollowerCount__range=(GteNumber, LteNumber))
+                print("Final Followers Filter", chainedFilter)
         if len(data["selectedFiltersInterest"]) != 0:
-            chainedFilter = UserInfo.objects
             for i in data["selectedFiltersInterest"]:
                 chainedFilter = chainedFilter.filter(interests__name=i)
-            print("Final Filter", chainedFilter)
+                if len(chainedFilter) == 0:
+                    break
+            print("Final Interest Filter", chainedFilter)
+        if len(data["selectedFiltersCost"]) != 0:
+            pass
+        # Obtain the user that is in all 3 chainedFilters
     return JsonResponse({'details': "accepted"})
