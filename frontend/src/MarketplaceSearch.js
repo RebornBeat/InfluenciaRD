@@ -129,13 +129,13 @@ export default class MarketplaceSearch extends Component {
 						<div className="Seguidores_Costo_Title"># de seguidores</div>
 						<div className="Section_Containers Follower_Filter">
 							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>0-500</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>501-5k</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>5k-20k</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>501-5m</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>5m-20m</div>
 						</div>
 						<div className="Section_Containers Follower_Filter">
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>20k-50k</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>50k-100k</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>100k-500k</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>20m-50m</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>50m-100m</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>100m-500m</div>
 						</div>
 					</div>
 					<div id="Interest_Container">
@@ -162,22 +162,16 @@ export default class MarketplaceSearch extends Component {
 						</div>
 					</div>
 					<div id="Costo_Container">
-						<div className="Seguidores_Costo_Title">Costo</div>
+						<div className="Seguidores_Costo_Title">Costo $RD</div>
 						<div className="Section_Containers Cost_Filter">
-							<div className="Section_Content_Containers">
-							</div>
-							<div className="Section_Content_Containers">
-							</div>
-							<div className="Section_Content_Containers">
-							</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>200-500</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>500-1m</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>1m-5m</div>
 						</div>
 						<div className="Section_Containers Cost_Filter">
-							<div className="Section_Content_Containers">
-							</div>
-							<div className="Section_Content_Containers">
-							</div>
-							<div className="Section_Content_Containers">
-							</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>5m-10m</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>10m-25m</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>25m-100m</div>
 						</div>
 					</div>
 				</div>

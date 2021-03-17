@@ -91,8 +91,6 @@ def initialSearch(request):
         for i in ranList:
             ranSet[i.InstaName] = {"Followers" : i.FollowerCount, "Cost" : i.Cost}
             print(i.interests.all())
-        for i in Interest.objects.all():
-            print(i.userinfo_set.all())
         return JsonResponse(ranSet)
 
 @csrf_exempt
@@ -108,11 +106,11 @@ def filteredSearch(request):
                 Lteendslice = len(i)
                 LteNumber = i[Ltestartslice:Lteendslice]
                 addedK = "000"
-                if "k" in GteNumber:
-                    GteNumber = GteNumber.replace("k", "")
+                if "m" in GteNumber:
+                    GteNumber = GteNumber.replace("m", "")
                     GteNumber = int(GteNumber + addedK)
-                if "k" in LteNumber:
-                    LteNumber = LteNumber.replace("k", "")
+                if "m" in LteNumber:
+                    LteNumber = LteNumber.replace("m", "")
                     LteNumber = int(LteNumber + addedK)
                 chainedFilter = chainedFilter.filter(FollowerCount__range=(GteNumber, LteNumber))
                 print("Final Followers Filter", chainedFilter)
@@ -123,6 +121,19 @@ def filteredSearch(request):
                     break
             print("Final Interest Filter", chainedFilter)
         if len(data["selectedFiltersCost"]) != 0:
-            pass
-        # Obtain the user that is in all 3 chainedFilters
+            for i in data["selectedFiltersCost"]:
+                Gteendslice = i.find("-")
+                GteNumber = i[0:Gteendslice]
+                Ltestartslice = i.find("-") + 1
+                Lteendslice = len(i)
+                LteNumber = i[Ltestartslice:Lteendslice]
+                addedK = "000"
+                if "m" in GteNumber:
+                    GteNumber = GteNumber.replace("m", "")
+                    GteNumber = int(GteNumber + addedK)
+                if "m" in LteNumber:
+                    LteNumber = LteNumber.replace("m", "")
+                    LteNumber = int(LteNumber + addedK)
+                chainedFilter = chainedFilter.filter(Cost__range=(GteNumber, LteNumber))
+                print("Final Cost Filter", chainedFilter)
     return JsonResponse({'details': "accepted"})
