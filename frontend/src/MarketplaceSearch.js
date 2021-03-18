@@ -57,7 +57,12 @@ export default class MarketplaceSearch extends Component {
 		}) 
 	}
 	
-	
+	handleScroll (e) {
+		let element = e.target
+		if (element.scrollHeight - Math.round(element.scrollTop) === element.clientHeight) {
+		  console.log("End of Scroll")
+		}
+	}
 	
 	onClick (e) {
 		{/* Check Section in which Event belongs to and if stored in state then remove else add and change CSS accordingly */} 
@@ -124,11 +129,30 @@ export default class MarketplaceSearch extends Component {
 			
 		}
 		
-		axios.post(`/filteredSearch/`, { data }).then((res) =>  {
-			{/* On filter click clear seenUsers List and after fetch set seenUsers list state with the returned list */} 
-			console.log( Object.keys(res.data).length)
-			this.setState({ data: res.data, seenUsers: res.data.seenList})
-		}) 
+		let isData = undefined
+		
+		for ( let i in data ) {
+			
+			if (data[i].length != 0) {
+				isData = true
+			} 
+			
+		}
+		
+		if ( isData === undefined ) {
+			
+			axios.post(`/initialSearch/`).then((res) =>  {
+				this.setState({ data: res.data})
+			}) 
+			
+		} else {
+			
+			axios.post(`/filteredSearch/`, { data }).then((res) =>  {
+				{/* On filter click clear seenUsers List and after fetch set seenUsers list state with the returned list */} 
+				this.setState({ data: res.data, seenUsers: res.data.seenList})
+			}) 
+			
+		}
 	}
 	
 	render () {
@@ -187,7 +211,7 @@ export default class MarketplaceSearch extends Component {
 						</div>
 					</div>
 				</div>
-				<div id="InfluencerListing_Container">
+				<div id="InfluencerListing_Container" onScroll={this.handleScroll.bind(this)}>
 				{/* Starting off display the top 5 influencers with the most views then display based on filters on ComponentMount*/} 
 				{ this.state.fetched == true && <DisplayFetch parentCallback = {this.callbackFunction} data = {this.state.data} /> }
 				</div>

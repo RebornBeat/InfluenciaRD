@@ -74,7 +74,7 @@ def initialSearch(request):
             #Make one get call with the list of Indexes instead of appending one by one.
             ranList.append(allSet[currentIndex])
             if len(ranList) == 5:
-                if request.user:
+                if request.user.username != "":
                     pass
                 else:
                     break
@@ -83,7 +83,7 @@ def initialSearch(request):
             if len(ranList) == len(allSet):
                 break
         ranSet = {}
-        if request.user:
+        if request.user.username != "":
             ranSet["Logged"] = "True"
         else:
             ranSet["Logged"] = "False"
@@ -145,4 +145,8 @@ def filteredSearch(request):
             filteredJSON["seenList"] = seenList
         except:
             return JsonResponse({})
+        if request.user.username != "":
+            filteredJSON["Logged"] = "True"
+        else:
+            filteredJSON["Logged"] = "False"
     return JsonResponse(filteredJSON)
