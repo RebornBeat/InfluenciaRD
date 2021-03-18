@@ -8,22 +8,29 @@ export class DisplayFetch extends Component {
 		
 		let userList = []
 		
-		for ( let i in this.props.data ) {
-			if ( i !== "Logged" && i !== "seenIndexes" ) {
-				userList.push(
-					<div className="User_Container">
-						<div className="User_Profile_Pic_Container User_Child">
-							<div className="Profile_Pic"></div>
+		if ( Object.keys(this.props.data).length > 1)  {
+		
+			for ( let i in this.props.data ) {
+				if ( i !== "Logged" && i !== "seenList" ) {
+					userList.push(
+						<div className="User_Container">
+							<div className="User_Profile_Pic_Container User_Child">
+								<div className="Profile_Pic"></div>
+							</div>
+							<div className="User_Name User_Child">@{i}</div>
+							<div className="User_Followers User_Child">{this.props.data[i].Followers}</div>
+							<div className="User_Cost User_Child">${this.props.data[i].Cost}</div>
+							<div className="User_Contact User_Child">
+								<button>Contactar</button>
+							</div>
 						</div>
-						<div className="User_Name User_Child">@{i}</div>
-						<div className="User_Followers User_Child">{this.props.data[i].Followers}</div>
-						<div className="User_Cost User_Child">${this.props.data[i].Cost}</div>
-						<div className="User_Contact User_Child">
-							<button>Contactar</button>
-						</div>
-					</div>
-				)
+					)
+				}
 			}
+		} else {
+			userList.push (
+				<div id="MarketPlaceSearch_Error_Container">No Users Found</div>
+			)
 		}
 	
 		
@@ -40,15 +47,17 @@ export class DisplayFetch extends Component {
 export default class MarketplaceSearch extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { data: "n/a", fetched: "", seenIndexes: [] };
+		this.state = { data: "n/a", fetched: "", Logged: "", seenUsers: [], selectedFiltersFollowers: [], selectedFiltersInterest: [], selectedFiltersCost: [] };
 	}
 	
 	componentDidMount() {
 		{/* If user is not logged in then display a list of 5 random users else display 20 random users at a time */} 
 		axios.post(`/initialSearch/`).then((res) =>  {
-			this.setState({ data: res.data, fetched: true, seenIndexes: res.data.seenIndexes, selectedFiltersFollowers: [], selectedFiltersInterest: [], selectedFiltersCost: [] })
+			this.setState({ data: res.data, fetched: true })
 		}) 
 	}
+	
+	
 	
 	onClick (e) {
 		{/* Check Section in which Event belongs to and if stored in state then remove else add and change CSS accordingly */} 
@@ -116,6 +125,9 @@ export default class MarketplaceSearch extends Component {
 		}
 		
 		axios.post(`/filteredSearch/`, { data }).then((res) =>  {
+			{/* On filter click clear seenUsers List and after fetch set seenUsers list state with the returned list */} 
+			console.log( Object.keys(res.data).length)
+			this.setState({ data: res.data, seenUsers: res.data.seenList})
 		}) 
 	}
 	

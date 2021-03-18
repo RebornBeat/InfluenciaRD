@@ -85,7 +85,6 @@ def initialSearch(request):
         ranSet = {}
         if request.user:
             ranSet["Logged"] = "True"
-            ranSet["seenIndexes"] = choosenIndexes
         else:
             ranSet["Logged"] = "False"
         for i in ranList:
@@ -136,4 +135,14 @@ def filteredSearch(request):
                     LteNumber = int(LteNumber + addedK)
                 chainedFilter = chainedFilter.filter(Cost__range=(GteNumber, LteNumber))
                 print("Final Cost Filter", chainedFilter)
-    return JsonResponse({'details': "accepted"})
+        #Excluse Seen Users on Scroll Down
+        filteredJSON = {}
+        seenList = []
+        try:
+            for i in chainedFilter:
+                filteredJSON[i.InstaName] = {"Followers" : i.FollowerCount, "Cost" : i.Cost}
+                seenList.append(i.InstaName)
+            filteredJSON["seenList"] = seenList
+        except:
+            return JsonResponse({})
+    return JsonResponse(filteredJSON)
