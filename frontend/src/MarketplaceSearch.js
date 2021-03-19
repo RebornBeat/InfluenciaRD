@@ -8,31 +8,63 @@ export class DisplayFetch extends Component {
 		
 		let userList = []
 		
-		if ( Object.keys(this.props.data).length > 1)  {
+		console.log(Object.keys(this.props.data).length, this.props.logged)
 		
-			for ( let i in this.props.data ) {
-				if ( i !== "Logged" && i !== "seenList" ) {
-					userList.push(
-						<div className="User_Container">
-							<div className="User_Profile_Pic_Container User_Child">
-								<div className="Profile_Pic"></div>
+		if ( this.props.logged === "False" ) {
+			
+			if ( Object.keys(this.props.data).length > 1)  {
+			
+				for ( let i in this.props.data ) {
+					if ( i !== "Logged" && i !== "seenList" ) {
+						userList.push(
+							<div className="User_Container">
+								<div className="User_Profile_Pic_Container User_Child">
+									<div className="Profile_Pic"></div>
+								</div>
+								<div className="User_Name User_Child">@{i}</div>
+								<div className="User_Followers User_Child">{this.props.data[i].FollowerCount}</div>
+								<div className="User_Cost User_Child">${this.props.data[i].Cost}</div>
+								<div className="User_Contact User_Child">
+									<button>Contactar</button>
+								</div>
 							</div>
-							<div className="User_Name User_Child">@{i}</div>
-							<div className="User_Followers User_Child">{this.props.data[i].Followers}</div>
-							<div className="User_Cost User_Child">${this.props.data[i].Cost}</div>
-							<div className="User_Contact User_Child">
-								<button>Contactar</button>
-							</div>
-						</div>
-					)
+						)
+					}
 				}
+			} else {
+				userList.push (
+					<div id="MarketPlaceSearch_Error_Container">No Users Found</div>
+				)
 			}
+			
 		} else {
-			userList.push (
-				<div id="MarketPlaceSearch_Error_Container">No Users Found</div>
-			)
+			
+			if ( Object.keys(this.props.data).length > 2)  {
+			
+				for ( let i in this.props.data ) {
+					if ( i !== "Logged" && i !== "seenList" ) {
+						userList.push(
+							<div className="User_Container">
+								<div className="User_Profile_Pic_Container User_Child">
+									<div className="Profile_Pic"></div>
+								</div>
+								<div className="User_Name User_Child">@{i}</div>
+								<div className="User_Followers User_Child">{this.props.data[i].FollowerCount}</div>
+								<div className="User_Cost User_Child">${this.props.data[i].Cost}</div>
+								<div className="User_Contact User_Child">
+									<button>Contactar</button>
+								</div>
+							</div>
+						)
+					}
+				}
+			} else {
+				userList.push (
+					<div id="MarketPlaceSearch_Error_Container">No Users Found</div>
+				)
+			}
+			
 		}
-	
 		
 		return (
 			<>
@@ -47,20 +79,37 @@ export class DisplayFetch extends Component {
 export default class MarketplaceSearch extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { data: "n/a", fetched: "", Logged: "", seenUsers: [], selectedFiltersFollowers: [], selectedFiltersInterest: [], selectedFiltersCost: [] };
+		this.state = { data: "n/a", fetched: "", Logged: "", seenUsers: [], selectedFiltersFollowers: [], selectedFiltersInterest: [], selectedFiltersCost: [], lastCall: "Initial" };
 	}
 	
 	componentDidMount() {
 		{/* If user is not logged in then display a list of 5 random users else display 20 random users at a time */} 
 		axios.post(`/initialSearch/`).then((res) =>  {
-			this.setState({ data: res.data, fetched: true })
+			this.setState({ data: res.data, fetched: true, Logged: res.data.Logged, seenUsers: res.data.seenList })
 		}) 
 	}
 	
 	handleScroll (e) {
 		let element = e.target
 		if (element.scrollHeight - Math.round(element.scrollTop) === element.clientHeight) {
-		  console.log("End of Scroll")
+			
+			if ( Math.round(element.scrollTop) !== 0 ) {
+				
+				if ( this.state.Logged === "True" ) {
+					{/* check if lastcall is initial or filter and pass seenUsers list  */} 
+					
+					if ( this.state.lastCall === "Initial" ) {
+						
+						
+					} else {
+						
+					}
+					
+					console.log(this.state.seenUsers, this.state.lastCall)
+				}
+				
+			}
+			
 		}
 	}
 	
@@ -142,14 +191,14 @@ export default class MarketplaceSearch extends Component {
 		if ( isData === undefined ) {
 			
 			axios.post(`/initialSearch/`).then((res) =>  {
-				this.setState({ data: res.data})
+				this.setState({ data: res.data,  Logged: res.data.Logged, seenUsers: res.data.seenList, lastCall: "Initial"})
 			}) 
 			
 		} else {
 			
 			axios.post(`/filteredSearch/`, { data }).then((res) =>  {
 				{/* On filter click clear seenUsers List and after fetch set seenUsers list state with the returned list */} 
-				this.setState({ data: res.data, seenUsers: res.data.seenList})
+				this.setState({ data: res.data, seenUsers: res.data.seenList, Logged: res.data.Logged, lastCall: "Filter"})
 			}) 
 			
 		}
@@ -213,7 +262,7 @@ export default class MarketplaceSearch extends Component {
 				</div>
 				<div id="InfluencerListing_Container" onScroll={this.handleScroll.bind(this)}>
 				{/* Starting off display the top 5 influencers with the most views then display based on filters on ComponentMount*/} 
-				{ this.state.fetched == true && <DisplayFetch parentCallback = {this.callbackFunction} data = {this.state.data} /> }
+				{ this.state.fetched == true && <DisplayFetch parentCallback = {this.callbackFunction} data = {this.state.data} logged = {this.state.Logged} /> }
 				</div>
 			</div>
 		);

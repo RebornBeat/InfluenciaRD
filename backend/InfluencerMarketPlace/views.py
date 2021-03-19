@@ -6,6 +6,7 @@ from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
 import random
+from django.core.serializers.json import DjangoJSONEncoder
 
 # Create your views here.
 
@@ -55,42 +56,58 @@ def register_request(request):
             return JsonResponse({'details': "Passwords Must Match"})
     return JsonResponse(data)
 
+def cleanedList (idList, seenUsers, Logged):
+    if seenUsers:
+        idList = list(set(idList)-set(seenUsers))
+    idLen = len(idList)
+    if Logged:
+        if idLen >= 20:
+            idList = idList[0:20]
+        else:
+            idList = idList[0:idLen]
+    else:
+        if idLen >= 5:
+            idList = idList[0:5]
+        else:
+            idList = idList[0:idLen]
+    return idList
+
+def cleanedDict (cleanedSet):
+    cleanedJSON = {}
+    for i in cleanedSet:
+        cleanedJSON[i["InstaName"]] = i
+    return cleanedJSON
+
 @csrf_exempt
 def initialSearch(request):
+    data = False
+    try:
+        data = json.loads(request.body.decode('utf-8'))["data"]
+    except:
+        pass
     if request.method =="POST":
-        # Get top 5 with highest follower count and return
         allSet = UserInfo.objects.all()
-        setLength = len(allSet) - 1
-        choosenIndexes = []
-        ranList = []
-        while True:
-            currentIndex = 0
-            while True:
-                randomIndex = random.randint(0, setLength)
-                if randomIndex not in choosenIndexes:
-                    currentIndex = randomIndex
-                    choosenIndexes.append(currentIndex)
-                    break
-            #Make one get call with the list of Indexes instead of appending one by one.
-            ranList.append(allSet[currentIndex])
-            if len(ranList) == 5:
-                if request.user.username != "":
-                    pass
-                else:
-                    break
-            if len(ranList) == 20:
-                break
-            if len(ranList) == len(allSet):
-                break
-        ranSet = {}
-        if request.user.username != "":
-            ranSet["Logged"] = "True"
+        idList = list(UserInfo.objects.values_list('id', flat=True))
+        if data:
+            if request.user.username != "":
+                idList = cleanedList (idList, data["seenUsers"], True)
+            else:
+                idList = cleanedList (idList, data["seenUsers"], None)
         else:
-            ranSet["Logged"] = "False"
-        for i in ranList:
-            ranSet[i.InstaName] = {"Followers" : i.FollowerCount, "Cost" : i.Cost}
-            print(i.interests.all())
-        return JsonResponse(ranSet)
+            if request.user.username != "":
+                idList = cleanedList (idList, None, True)
+            else:
+                idList = cleanedList (idList, None, None)
+        allSet = allSet.filter(pk__in=idList).order_by('?')
+        # Return a dictionary value of all queries in allSet
+        cleanedSet = list(allSet.values('InstaName', 'FollowerCount', 'Cost'))
+        cleanedSet = cleanedDict (cleanedSet)
+        if request.user.username != "":
+            cleanedSet["Logged"] = "True"
+            cleanedSet["seenList"] = idList
+        else:
+            cleanedSet["Logged"] = "False"
+        return JsonResponse(cleanedSet)
 
 @csrf_exempt
 def filteredSearch(request):
@@ -112,13 +129,11 @@ def filteredSearch(request):
                     LteNumber = LteNumber.replace("m", "")
                     LteNumber = int(LteNumber + addedK)
                 chainedFilter = chainedFilter.filter(FollowerCount__range=(GteNumber, LteNumber))
-                print("Final Followers Filter", chainedFilter)
         if len(data["selectedFiltersInterest"]) != 0:
             for i in data["selectedFiltersInterest"]:
                 chainedFilter = chainedFilter.filter(interests__name=i)
                 if len(chainedFilter) == 0:
                     break
-            print("Final Interest Filter", chainedFilter)
         if len(data["selectedFiltersCost"]) != 0:
             for i in data["selectedFiltersCost"]:
                 Gteendslice = i.find("-")
@@ -134,19 +149,24 @@ def filteredSearch(request):
                     LteNumber = LteNumber.replace("m", "")
                     LteNumber = int(LteNumber + addedK)
                 chainedFilter = chainedFilter.filter(Cost__range=(GteNumber, LteNumber))
-                print("Final Cost Filter", chainedFilter)
-        #Excluse Seen Users on Scroll Down
-        filteredJSON = {}
-        seenList = []
+        idList = list(chainedFilter.values_list('id', flat=True))
         try:
-            for i in chainedFilter:
-                filteredJSON[i.InstaName] = {"Followers" : i.FollowerCount, "Cost" : i.Cost}
-                seenList.append(i.InstaName)
-            filteredJSON["seenList"] = seenList
+            isData = data["seenUsers"]
+            if request.user.username != "":
+                idList = cleanedList (idList, data["seenUsers"], True)
+            else:
+                idList = cleanedList (idList, data["seenUsers"], None)
         except:
-            return JsonResponse({})
+            if request.user.username != "":
+                idList = cleanedList (idList, None, True)
+            else:
+                idList = cleanedList (idList, None, None)
+        chainedFilter = chainedFilter.filter(pk__in=idList).order_by('?')
+        filteredJSON = list(chainedFilter.values('InstaName', 'FollowerCount', 'Cost'))
+        filteredJSON = cleanedDict (filteredJSON)
         if request.user.username != "":
             filteredJSON["Logged"] = "True"
+            filteredJSON["seenList"] = idList
         else:
             filteredJSON["Logged"] = "False"
     return JsonResponse(filteredJSON)
