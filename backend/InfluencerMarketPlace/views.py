@@ -60,6 +60,7 @@ def cleanedList (idList, seenUsers, Logged):
     if seenUsers:
         idList = list(set(idList)-set(seenUsers))
     idLen = len(idList)
+    random.shuffle(idList)
     if Logged:
         if idLen >= 20:
             idList = idList[0:20]

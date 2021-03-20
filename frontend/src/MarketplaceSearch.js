@@ -79,7 +79,7 @@ export class DisplayFetch extends Component {
 export default class MarketplaceSearch extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { data: "n/a", fetched: "", Logged: "", seenUsers: [], selectedFiltersFollowers: [], selectedFiltersInterest: [], selectedFiltersCost: [], lastCall: "Initial" };
+		this.state = { data: "n/a", fetched: "", Logged: "", seenUsers: [], selectedFiltersFollowers: [], selectedFiltersInterest: [], selectedFiltersCost: [], lastCall: "Initial", scrollEnd: false };
 	}
 	
 	componentDidMount() {
@@ -93,21 +93,46 @@ export default class MarketplaceSearch extends Component {
 		let element = e.target
 		if (element.scrollHeight - Math.round(element.scrollTop) === element.clientHeight) {
 			
-			if ( Math.round(element.scrollTop) !== 0 ) {
+			if ( this.state.scrollEnd == false) {
 				
-				if ( this.state.Logged === "True" ) {
-					{/* check if lastcall is initial or filter and pass seenUsers list  */} 
+				if ( Math.round(element.scrollTop) !== 0 ) {
 					
-					if ( this.state.lastCall === "Initial" ) {
+					if ( this.state.Logged === "True" ) {
+						{/* check if lastcall is initial or filter and pass seenUsers list  */} 
 						
-						
-					} else {
+						if ( this.state.lastCall === "Initial" ) {
+							{/* Fetch and obtaining new data and merge with existing data and seenUsers  */} 
+							let data = { seenUsers: this.state.seenUsers }
+							
+							axios.post(`/initialSearch/`, { data }).then((res) =>  {
+								let newData = Object.assign({}, this.state.data, res.data)
+								let addList = res.data["seenList"]
+								let newSeenUsers = this.state.seenUsers.concat(addList)
+								this.setState({data: newData, seenUsers: newSeenUsers })
+								
+								if ( this.state.Logged === "False" ) {
+									
+									if ( Object.keys(res.data).length < 2)  {
+										this.setState({ scrollEnd: true})
+									}
+									
+								} else {
+								
+									if ( Object.keys(res.data).length < 3 )  {
+										this.setState({ scrollEnd: true})
+									}
+									
+								}
+								
+							}) 
+							
+						} else {
+							
+						}
 						
 					}
 					
-					console.log(this.state.seenUsers, this.state.lastCall)
 				}
-				
 			}
 			
 		}
