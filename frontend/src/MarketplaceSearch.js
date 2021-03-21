@@ -91,9 +91,11 @@ export default class MarketplaceSearch extends Component {
 	
 	handleScroll (e) {
 		let element = e.target
-		if (element.scrollHeight - Math.round(element.scrollTop) === element.clientHeight) {
+		if ( element.scrollHeight - Math.ceil(element.scrollTop) === element.clientHeight || element.scrollHeight - Math.round(element.scrollTop) === element.clientHeight || element.scrollHeight - Math.floor(element.scrollTop) === element.clientHeight || element.scrollHeight - element.scrollTop === element.clientHeight || element.scrollHeight - Math.floor(element.scrollTop) - 1 === element.clientHeight  ) {
+			console.log((element.scrollHeight - Math.round(element.scrollTop)), (element.scrollHeight - Math.ceil(element.scrollTop)), (element.scrollHeight - Math.floor(element.scrollTop)), element.clientHeight)
+			console.log(this.state.scrollEnd)
 			
-			if ( this.state.scrollEnd == false) {
+			if ( this.state.scrollEnd === false) {
 				
 				if ( Math.round(element.scrollTop) !== 0 ) {
 					
