@@ -1,0 +1,45 @@
+#Dashboard_Container {
+	display: flex;
+}
+
+#Panel_Container {
+	height: 100vh;
+	width: 15vw;
+	background-color: #6C00F6;
+}
+
+#Main_User_Container {
+	width:85vw;
+	height: 15vh;
+	border: solid;
+}
+
+#Main_Information_Container {
+	position: relative;
+	left: 2.5vw;
+	width:80vw;
+	height: 20vh;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+#Main_Content_Container {
+	width:85vw;
+	height: 63vh;
+}
+
+.Information_Container {
+	width: 25vw;
+	height: 15vh;
+	background-color:#6C00F6;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	border-radius: 3px;	
+	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+	color: white;
+	font-size: 1.4rem;
+	font-weight: 500;
+}

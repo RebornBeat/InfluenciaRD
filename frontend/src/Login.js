@@ -24,7 +24,7 @@ export default class Login extends Component {
 	
 	onClick (e) {
 		if ( e.target.id === "Login_Exit" ) {
-			this.props.parentCallback("Home");
+			this.props.parentCallback("Home", "Return");
 		}
 		
 		if ( e.target.id === "Login_Submit" ) {
@@ -33,14 +33,14 @@ export default class Login extends Component {
 				if ( res.data.details != "accepted" ){
 					this.setState({Error: res.data.details})
 				} else {
-					this.props.parentCallback("Home");
+					this.props.parentCallback("Dashboard", "Accepted");
 				}
 			});
 		}
 		
 		if ( e.target.id === "Login_Register" ) {
 			console.log("Register")
-			this.props.parentCallback("Register");
+			this.props.parentCallback("Register", "Return");
 		}
 		
 		

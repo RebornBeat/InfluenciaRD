@@ -156,7 +156,7 @@ export default class MarketplaceSearch extends Component {
 				let addList = [e.target.innerHTML]
 				let newList = this.state.selectedFiltersFollowers.concat(addList)
 				this.setState({selectedFiltersFollowers: newList })
-				e.target.style.background = "#671FAE"
+				e.target.style.background = "#6C00F6"
 				e.target.style.color = "white"
 				data = { selectedFiltersFollowers: newList, selectedFiltersInterest: this.state.selectedFiltersInterest, selectedFiltersCost: this.state.selectedFiltersCost}
 			}
@@ -176,29 +176,9 @@ export default class MarketplaceSearch extends Component {
 				let addList = [e.target.innerHTML]
 				let newList = this.state.selectedFiltersInterest.concat(addList)
 				this.setState({selectedFiltersInterest: newList })
-				e.target.style.background = "#671FAE"
+				e.target.style.background = "#6C00F6"
 				e.target.style.color = "white"
 				data = { selectedFiltersFollowers: this.state.selectedFiltersFollowers, selectedFiltersInterest: newList, selectedFiltersCost: this.state.selectedFiltersCost}
-			}
-			
-		}
-		
-		if ( e.target.parentElement.className.includes('Cost_Filter') ) {
-
-			if ( this.state.selectedFiltersCost.includes( e.target.innerHTML ) ) {
-				let ExistingList = this.state.selectedFiltersCost
-				let selectedIndex = ExistingList.indexOf(e.target.innerHTML)
-				ExistingList.splice(selectedIndex, 1)
-				e.target.style.background = "white"
-				e.target.style.color = "black"
-				data = { selectedFiltersFollowers: this.state.selectedFiltersFollowers, selectedFiltersInterest: this.state.selectedFiltersInterest, selectedFiltersCost: this.state.selectedFiltersCost}
-			} else {
-				let addList = [e.target.innerHTML]
-				let newList = this.state.selectedFiltersCost.concat(addList)
-				this.setState({selectedFiltersCost: newList })
-				e.target.style.background = "#671FAE"
-				e.target.style.color = "white"
-				data = { selectedFiltersFollowers: this.state.selectedFiltersFollowers, selectedFiltersInterest: this.state.selectedFiltersInterest, selectedFiltersCost: newList}
 			}
 			
 		}
@@ -229,6 +209,35 @@ export default class MarketplaceSearch extends Component {
 		}
 	}
 	
+	onMouseOver (e) {
+		
+		e.target.style.background = "#6C00F6"
+		e.target.style.color = "white"
+	}
+	
+	onMouseOut (e) {
+		
+		if ( e.target.parentElement.className.includes('Follower_Filter') ) {
+			
+			if ( this.state.selectedFiltersFollowers.includes( e.target.innerHTML ) === false ) {
+				e.target.style.background = "white"
+				e.target.style.color = "black"
+			}
+			
+		}
+		
+		if ( e.target.parentElement.className.includes('Interest_Filter') ) {
+
+			if ( this.state.selectedFiltersInterest.includes( e.target.innerHTML ) === false ) {
+				e.target.style.background = "white"
+				e.target.style.color = "black"
+			}
+			
+		}
+		
+		
+	}
+	
 	render () {
 		
 		return (
@@ -238,50 +247,37 @@ export default class MarketplaceSearch extends Component {
 					<div id="Seguidores_Container">
 						<div className="Seguidores_Costo_Title"># de seguidores</div>
 						<div className="Section_Containers Follower_Filter">
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>0-500</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>501-5m</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>5m-20m</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >0-500</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >501-5m</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >5m-20m</div>
 						</div>
 						<div className="Section_Containers Follower_Filter">
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>20m-50m</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>50m-100m</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>100m-500m</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >20m-50m</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >50m-100m</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >100m-500m</div>
 						</div>
 					</div>
 					<div id="Interest_Container">
 						<div id="Interest_Title">Interés</div>
 						<div className="Section_Containers Interest_Filter">
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Comida</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Peliculas</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Belleza</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >Comida</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >Peliculas</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >Belleza</div>
 						</div>
 						<div className="Section_Containers Interest_Filter">
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Autos</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Deportes</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Juegos</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >Autos</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >Deportes</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >Juegos</div>
 						</div>
 						<div className="Section_Containers Interest_Filter">
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Viajes</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Moda</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Salud</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >Viajes</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >Moda</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >Salud</div>
 						</div>
 						<div className="Section_Containers Interest_Filter">
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Crianza</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Negocio</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>Fotografía</div>
-						</div>
-					</div>
-					<div id="Costo_Container">
-						<div className="Seguidores_Costo_Title">Costo $RD</div>
-						<div className="Section_Containers Cost_Filter">
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>200-500</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>500-1m</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>1m-5m</div>
-						</div>
-						<div className="Section_Containers Cost_Filter">
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>5m-10m</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>10m-25m</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)}>25m-100m</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >Crianza</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >Negocio</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >Fotografía</div>
 						</div>
 					</div>
 				</div>
