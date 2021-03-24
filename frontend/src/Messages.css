@@ -1,0 +1,49 @@
+#Message_Information_Container{
+	width: 30vw;
+	height: 55vh;
+	border: solid;	
+	border-width: 3px;
+	border-radius: 3px;
+	border-color: #6C00F6;
+	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+	overflow-x: hidden;
+}
+
+.Message_Information_Wrapper {
+	position: relative;
+	margin-top: 2vh;
+	width: 25vw;
+	height: 10vh;
+	margin-left: auto;
+	margin-right: auto;
+	border: solid;	
+	border-width: 3px;
+	border-radius: 3px;
+	border-color: #6C00F6;
+	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+#Message_Content_Container{
+	position: relative;
+	width: 50vw;
+	height: 55vh;
+	background: url("./Background.svg") white; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+	border: solid;
+	border-width: 3px;
+	border-radius: 3px;
+	border-color: #6C00F6;
+	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+	overflow-x: hidden;
+}
+
+.MessageWrapper {
+	margin-top: 2vh;
+	width: 25vw;
+	height: 10vh;
+	border: solid;
+	margin-left: auto;
+	margin-right: auto;
+}

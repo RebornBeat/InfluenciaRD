@@ -8,8 +8,6 @@ export class DisplayFetch extends Component {
 		
 		let userList = []
 		
-		console.log(Object.keys(this.props.data).length, this.props.logged)
-		
 		if ( this.props.logged === "False" ) {
 			
 			if ( Object.keys(this.props.data).length > 1)  {
@@ -92,8 +90,7 @@ export default class MarketplaceSearch extends Component {
 	handleScroll (e) {
 		let element = e.target
 		if ( element.scrollHeight - Math.ceil(element.scrollTop) === element.clientHeight || element.scrollHeight - Math.round(element.scrollTop) === element.clientHeight || element.scrollHeight - Math.floor(element.scrollTop) === element.clientHeight || element.scrollHeight - element.scrollTop === element.clientHeight || element.scrollHeight - Math.floor(element.scrollTop) - 1 === element.clientHeight  ) {
-			console.log((element.scrollHeight - Math.round(element.scrollTop)), (element.scrollHeight - Math.ceil(element.scrollTop)), (element.scrollHeight - Math.floor(element.scrollTop)), element.clientHeight)
-			console.log(this.state.scrollEnd)
+
 			
 			if ( this.state.scrollEnd === false) {
 				
@@ -144,6 +141,8 @@ export default class MarketplaceSearch extends Component {
 		{/* Check Section in which Event belongs to and if stored in state then remove else add and change CSS accordingly */} 
 
 		let data = undefined
+		
+		this.setState({ scrollEnd: false })
 
 		if ( e.target.parentElement.className.includes('Follower_Filter') ) {
 			
@@ -212,7 +211,6 @@ export default class MarketplaceSearch extends Component {
 	}
 	
 	onMouseOver (e) {
-		
 		e.target.style.background = "#6C00F6"
 		e.target.style.color = "white"
 	}
@@ -243,7 +241,7 @@ export default class MarketplaceSearch extends Component {
 	render () {
 		
 		return (
-			<div id="MarketplaceSearch_Container">
+			<>
 				<div id="InfluencerFilter_Container">
 				 {/* If a filter is selected obtain all filters and fetch results based on filters */} 
 					<div id="Seguidores_Container">
@@ -284,10 +282,14 @@ export default class MarketplaceSearch extends Component {
 					</div>
 				</div>
 				<div id="InfluencerListing_Container" onScroll={this.handleScroll.bind(this)}>
-				{/* Starting off display the top 5 influencers with the most views then display based on filters on ComponentMount*/} 
-				{ this.state.fetched == true && <DisplayFetch parentCallback = {this.callbackFunction} data = {this.state.data} logged = {this.state.Logged} /> }
+					<div id="Listing_Header">
+						<div className="Listing_Title_Header">Usario</div>
+						<div className="Listing_Title_Header">Seguidores</div>
+						<div className="Listing_Title_Header">Costo</div>
+					</div>
+					{ this.state.fetched == true && <DisplayFetch parentCallback = {this.callbackFunction} data = {this.state.data} logged = {this.state.Logged} /> }
 				</div>
-			</div>
+			</>
 		);
 		
 	}
