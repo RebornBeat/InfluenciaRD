@@ -9,6 +9,12 @@ export class SocialAccountsMain extends Component {
 	this.state = {activationCode: undefined};
 	}
 	
+	
+	copyBoard (e) {
+		let textElement = e.target.parentElement.querySelector(".socialActivation_Link_Wrapper").innerHTML
+		navigator.clipboard.writeText(textElement)
+	}
+	
 	onClick (e) {
 		this.props.parentCallback(e.target.innerHTML )
 	}
@@ -55,13 +61,67 @@ export class SocialAccountsMain extends Component {
 						<div id="socialActivation_Wrapper">
 							<div className="socialActivation_Content_Wrapper">
 								<div className="socialActivation_Title_Wrapper">Link:</div>
-								<div className="socialActivation_Link_Wrapper">"https://www.instagram.com/"</div>
-								<div className="socialActivation_Copy_Wrapper">Copiar</div>
+								<div className="socialActivation_Link_Wrapper">https://www.instagram.com/</div>
+								<div className="socialActivation_Copy_Wrapper" onClick={this.copyBoard.bind(this)}>Copiar</div>
 							</div>
 							<div className="socialActivation_Content_Wrapper">
 								<div className="socialActivation_Title_Wrapper">Codigo:</div>
 								<div className="socialActivation_Link_Wrapper">{this.state.activationCode}</div>
-								<div className="socialActivation_Copy_Wrapper">Copiar</div>
+								<div className="socialActivation_Copy_Wrapper" onClick={this.copyBoard.bind(this)}>Copiar</div>
+							</div>
+						</div>
+					</>
+				}
+				
+				{ this.props.component == "TikTok" && 
+					<>
+						<div id="socialAccounts_Title">Envie el Codigo de Verification a Nuestra Pagina</div>
+						<div id="socialActivation_Wrapper">
+							<div className="socialActivation_Content_Wrapper">
+								<div className="socialActivation_Title_Wrapper">Link:</div>
+								<div className="socialActivation_Link_Wrapper">https://www.instagram.com/</div>
+								<div className="socialActivation_Copy_Wrapper" onClick={this.copyBoard.bind(this)}>Copiar</div>
+							</div>
+							<div className="socialActivation_Content_Wrapper">
+								<div className="socialActivation_Title_Wrapper">Codigo:</div>
+								<div className="socialActivation_Link_Wrapper">{this.state.activationCode}</div>
+								<div className="socialActivation_Copy_Wrapper" onClick={this.copyBoard.bind(this)}>Copiar</div>
+							</div>
+						</div>
+					</>
+				}
+				
+				{ this.props.component == "Youtube" && 
+					<>
+						<div id="socialAccounts_Title">Envie el Codigo de Verification a Nuestra Pagina</div>
+						<div id="socialActivation_Wrapper">
+							<div className="socialActivation_Content_Wrapper">
+								<div className="socialActivation_Title_Wrapper">Link:</div>
+								<div className="socialActivation_Link_Wrapper">https://www.instagram.com/</div>
+								<div className="socialActivation_Copy_Wrapper" onClick={this.copyBoard.bind(this)}>Copiar</div>
+							</div>
+							<div className="socialActivation_Content_Wrapper">
+								<div className="socialActivation_Title_Wrapper">Codigo:</div>
+								<div className="socialActivation_Link_Wrapper" >{this.state.activationCode}</div>
+								<div className="socialActivation_Copy_Wrapper" onClick={this.copyBoard.bind(this)}>Copiar</div>
+							</div>
+						</div>
+					</>
+				}
+				
+				{ this.props.component == "Facebook" && 
+					<>
+						<div id="socialAccounts_Title">Envie el Codigo de Verification a Nuestra Pagina</div>
+						<div id="socialActivation_Wrapper">
+							<div className="socialActivation_Content_Wrapper">
+								<div className="socialActivation_Title_Wrapper">Link:</div>
+								<div className="socialActivation_Link_Wrapper">https://www.instagram.com/</div>
+								<div className="socialActivation_Copy_Wrapper" onClick={this.copyBoard.bind(this)}>Copiar</div>
+							</div>
+							<div className="socialActivation_Content_Wrapper">
+								<div className="socialActivation_Title_Wrapper">Codigo:</div>
+								<div className="socialActivation_Link_Wrapper">{this.state.activationCode}</div>
+								<div className="socialActivation_Copy_Wrapper" onClick={this.copyBoard.bind(this)}>Copiar</div>
 							</div>
 						</div>
 					</>
