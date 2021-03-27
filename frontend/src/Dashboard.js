@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 import './Dashboard.css';
 import MarketplaceSearch from './MarketplaceSearch';
 import Messages from './Messages';
+import SocialAccounts from './SocialAccounts';
 
 export default class Dashboard extends Component {
 	constructor(props) {
 	super(props);
 	this.state = {component: "Home"};
+	}
+	
+	componentDidMount() {
+		{/* If false, setComponent to activateSocial and display steps for activation*/} 
+		if ( this.props.socialActivated === false ) {
+			this.setState({component: "activateSocial"});
+		}
 	}
 	
 	callbackFunction = (componentName) => {
@@ -62,6 +70,7 @@ export default class Dashboard extends Component {
 						<div id="Main_Content_Container">
 							{ this.state.component == "Home" && <MarketplaceSearch parentCallback = {this.callbackFunction} /> }
 							{ this.state.component == "Messages" && <Messages parentCallback = {this.callbackFunction} /> }
+							{ this.state.component == "activateSocial" && <SocialAccounts parentCallback = {this.callbackFunction} /> }
 						</div>
 					</div>
 				</div>

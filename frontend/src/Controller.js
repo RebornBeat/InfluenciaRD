@@ -6,11 +6,11 @@ import Dashboard from './Dashboard';
 export default class Controller extends Component {
 	constructor(props) {
 	super(props);
-	this.state = {component: "Home"};
+	this.state = {component: "Home", socialActivated: undefined};
 	}
 	
-	callbackFunction = (componentName) => {
-		this.setState({component: componentName});
+	callbackFunction = (componentName, socialActivated) => {
+		this.setState({component: componentName, socialActivated: socialActivated});
 
 	}
 	
@@ -19,7 +19,7 @@ export default class Controller extends Component {
 		return (
 			<>
 				{ this.state.component == "Home" && <Home parentCallback = {this.callbackFunction} /> }
-				{ this.state.component == "Dashboard" && <Dashboard parentCallback = {this.callbackFunction} /> }
+				{ this.state.component == "Dashboard" && <Dashboard parentCallback = {this.callbackFunction} socialActivated = {this.state.socialActivated} /> }
 			</>
 		);
 		

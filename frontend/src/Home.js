@@ -11,10 +11,10 @@ export default class Home extends Component {
 	this.state = {component: "Home", key: ""};
 	}
 	
-	callbackFunction = (componentName, returnedStatus) => {
+	callbackFunction = (componentName, returnedStatus, socialActivated) => {
 		
 		if ( returnedStatus === "Accepted") {
-			this.props.parentCallback(componentName);
+			this.props.parentCallback(componentName, socialActivated);
 		} else {
 			this.setState({component: componentName});
 		}

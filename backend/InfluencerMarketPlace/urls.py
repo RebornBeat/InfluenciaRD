@@ -8,4 +8,5 @@ urlpatterns = [
     path('register/', views.register_request, name='register_request'),
     path('initialSearch/', views.initialSearch, name='initialSearch'),
     path('filteredSearch/', views.filteredSearch, name='filteredSearch'),
+    path('socialActivation/', views.socialActivation, name='socialActivation'),
 ]

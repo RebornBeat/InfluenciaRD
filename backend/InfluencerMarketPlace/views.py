@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
+import string
 import random
 from django.core.serializers.json import DjangoJSONEncoder
 
@@ -24,7 +25,7 @@ def login_request(request):
         user = authenticate(request, username=data["Email"], password=data["Pass"])
         if user is not None:
             login(request, user)
-            return JsonResponse({'details': "accepted"})
+            return JsonResponse({'details': "accepted", "socialActivated": UserInfo.objects.get(user=u).socialActivated })
         else:
             return JsonResponse({'details': "Incorrect Password"})
     return JsonResponse(data)
@@ -47,7 +48,7 @@ def register_request(request):
                         user = authenticate(request, username=data["Email"], password=data["Pass"])
                         if user is not None:
                             login(request, user)
-                            return JsonResponse({'details': "accepted"})
+                            return JsonResponse({'details': "accepted", "socialActivated": UserInfo.objects.get(user=u).socialActivated })
                     else:
                         return JsonResponse({'details': "Please Enter A Valid Email"})
                 else:
@@ -171,3 +172,13 @@ def filteredSearch(request):
         else:
             filteredJSON["Logged"] = "False"
     return JsonResponse(filteredJSON)
+
+@csrf_exempt
+def socialActivation(request):
+    #check if a user has the code in use and if so check if it has expired or not
+    code = ''.join(random.choices(string.digits, k=8))
+    try:
+        UserInfo.objects.get(activationCode=code)
+    except:
+        print(code)
+    return JsonResponse({'activationCode': code})

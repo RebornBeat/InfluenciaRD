@@ -32,8 +32,8 @@ export default class Login extends Component {
 			axios.post(`/login/`, { data }).then((res) =>  {
 				if ( res.data.details != "accepted" ){
 					this.setState({Error: res.data.details})
-				} else {
-					this.props.parentCallback("Dashboard", "Accepted");
+				} else { 
+					this.props.parentCallback("Dashboard", "Accepted", res.data.socialActivated);
 				}
 			});
 		}
