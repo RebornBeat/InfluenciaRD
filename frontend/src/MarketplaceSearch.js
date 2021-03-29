@@ -14,10 +14,13 @@ export class DisplayFetch extends Component {
 			
 				for ( let i in this.props.data ) {
 					if ( i !== "Logged" && i !== "seenList" ) {
+						
+						let profileLink = 'http://127.0.0.1:8000/media/' + this.props.data[i].photo
+						
 						userList.push(
 							<div className="User_Container">
 								<div className="User_Profile_Pic_Container User_Child">
-									<div className="Profile_Pic"></div>
+									<div className="Profile_Pic">profileLink</div>
 								</div>
 								<div className="User_Name User_Child">@{i}</div>
 								<div className="User_Followers User_Child">{this.props.data[i].FollowerCount}</div>
@@ -41,10 +44,13 @@ export class DisplayFetch extends Component {
 			
 				for ( let i in this.props.data ) {
 					if ( i !== "Logged" && i !== "seenList" ) {
+						
+						let profileLink = 'http://127.0.0.1:8000/media/' + this.props.data[i].photo
+						
 						userList.push(
 							<div className="User_Container">
 								<div className="User_Profile_Pic_Container User_Child">
-									<div className="Profile_Pic"></div>
+									<img className="Profile_Pic" src={profileLink}></img>
 								</div>
 								<div className="User_Name User_Child">@{i}</div>
 								<div className="User_Followers User_Child">{this.props.data[i].FollowerCount}</div>

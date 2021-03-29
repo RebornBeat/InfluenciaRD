@@ -102,7 +102,7 @@ def initialSearch(request):
                 idList = cleanedList (idList, None, None)
         allSet = allSet.filter(pk__in=idList).order_by('?')
         # Return a dictionary value of all queries in allSet
-        cleanedSet = list(allSet.values('InstaName', 'FollowerCount', 'Cost'))
+        cleanedSet = list(allSet.values('InstaName', 'FollowerCount', 'Cost', 'photo'))
         cleanedSet = cleanedDict (cleanedSet)
         if request.user.username != "":
             cleanedSet["Logged"] = "True"

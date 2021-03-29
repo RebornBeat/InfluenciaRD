@@ -32,7 +32,7 @@ class UserInfo(models.Model):
     interests = models.ManyToManyField(Interest, blank=True)
     conversation = models.ManyToManyField(Conversation, blank=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
-    photo = models.ImageField(upload_to='cars', blank=True, null=True)
+    photo = models.ImageField(blank=True, null=True)
     socialActivated = models.BooleanField(default=False)
     activationCode = models.IntegerField(blank=True, null=True)
     activationTime = models.DateTimeField(blank=True, null=True)
