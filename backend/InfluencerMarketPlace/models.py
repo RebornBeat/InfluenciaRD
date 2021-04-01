@@ -8,20 +8,16 @@ class Interest(models.Model):
         return self.name
     
 class Conversation(models.Model):
-    name = models.CharField(max_length=60)
-    
-    def __str__(self):
-        return self.name
-    
+    users = models.ManyToManyField(User, blank=True)
+ 
 class Message(models.Model):
     conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE)
-    sender = models.CharField(max_length=120, blank=True, null=True)
-    reciever = models.CharField(max_length=120, blank=True, null=True)
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     msg_content = models.CharField(max_length=500, blank=True, null=True)
-    created_at = models.DateTimeField()
+    created_at = models.DateTimeField(blank=True, null=True)
     
     def __str__(self):
-        return self.headline
+        return self.msg_content
     
 class UserInfo(models.Model):
     InstaName = models.CharField(max_length=120, blank=True, null=True)

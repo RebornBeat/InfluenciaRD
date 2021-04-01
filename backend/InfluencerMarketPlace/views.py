@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from .models import UserInfo, Interest
+from .models import UserInfo, Interest, Conversation
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 import json
@@ -8,6 +8,8 @@ from django.views.decorators.csrf import csrf_exempt
 import string
 import random
 from django.core.serializers.json import DjangoJSONEncoder
+import datetime
+import math
 
 # Create your views here.
 
@@ -174,11 +176,60 @@ def filteredSearch(request):
     return JsonResponse(filteredJSON)
 
 @csrf_exempt
+def conversationFetch(request):
+    u = User.objects.get(username=request.user.username)
+    convo = Conversation.objects.filter(users=u)
+    convoDict = {}
+    for i in convo:
+        userList = []
+        for ii in list(i.users.all().values("username")):
+            userList.append(ii["username"])
+        convoDict[i.id] = userList
+    convoDict["user"] = request.user.username
+    return JsonResponse({'convo': convoDict})
+
+@csrf_exempt
+def messageFetch(request):
+    pass
+    
+@csrf_exempt
 def socialActivation(request):
     #check if a user has the code in use and if so check if it has expired or not
-    code = ''.join(random.choices(string.digits, k=8))
-    try:
-        UserInfo.objects.get(activationCode=code)
-    except:
-        print(code)
+    while True:
+        code = ''.join(random.choices(string.digits, k=8))
+        try:
+            u = UserInfo.objects.get(activationCode=code)
+            timeDiff = math.floor((datetime.datetime.now()-u.activationTime).total_seconds() / 60)
+            if timeDiff > 60:
+                u = User.objects.get(username=request.user.username)
+                u = UserInfo.objects.get(user=u)
+                u.activationCode = code
+                u.activationTime = datetime.datetime.now()
+                u.save()
+                break
+        except:
+            u = User.objects.get(username=request.user.username)
+            u = UserInfo.objects.get(user=u)
+            if u.activationCode != "":
+                #check if the hour expire
+                timeDiff = math.floor((datetime.datetime.now()-u.activationTime).total_seconds() / 60)
+                if timeDiff > 60:        
+                    u.activationCode = code
+                    u.activationTime = datetime.datetime.now()
+                    u.save()
+                    print("changed")
+                else:
+                    code = u.activationCode
+                    break
+            else:
+                u.activationCode = code
+                u.activationTime = datetime.datetime.now()
+                u.save()
+                print("changed")
+                break
     return JsonResponse({'activationCode': code})
+
+
+@csrf_exempt
+def startActivation(request):
+    pass
