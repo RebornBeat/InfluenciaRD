@@ -6,7 +6,7 @@ export class ConvoDisplay extends Component {
 	
 	constructor(props) {
 	super(props);
-	this.state = {convoDiv: "", mountedID: ""};
+	this.state = {convoDiv: "", mountedID: "", topPOS: ""};
 	}
 	
 	componentDidUpdate() {
@@ -15,9 +15,10 @@ export class ConvoDisplay extends Component {
 
 			if ( this.state.mountedID === "" ) {
 				let mountedDiv = document.getElementById(this.props.mountedID);
-				
+
 				if ( mountedDiv !== null ) {
-					this.setState({convoDiv: mountedDiv, mountedID: this.props.mountedID})
+					let topPos = mountedDiv.offsetTop;
+					this.setState({convoDiv: mountedDiv, mountedID: this.props.mountedID, topPOS: topPos})
 				}
 				
 			}
@@ -25,7 +26,13 @@ export class ConvoDisplay extends Component {
 		}
 		
 		if ( this.state.convoDiv !== "" ) {
-			console.log(this.state.convoDiv)
+			
+			if ( this.state.topPOS !== "" ) {
+				console.log(this.state.topPOS)
+				let topValue = this.state.topPOS - 10
+				document.getElementById('Message_Information_Container').scrollTop = topValue;
+			}
+			
 			this.state.convoDiv.style.background = "#6C00F6"
 			this.state.convoDiv.style.color = "white"
 		}
@@ -51,7 +58,7 @@ export class ConvoDisplay extends Component {
 				this.state.convoDiv.style.color = "black"
 			}
 			
-			this.setState({convoDiv: parentDiv})
+			this.setState({convoDiv: parentDiv, topPOS: ""})
 			
 			let data = { id: convoID }
 			
