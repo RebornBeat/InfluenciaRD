@@ -10,18 +10,22 @@ export class ConvoDisplay extends Component {
 	}
 	
 	componentDidUpdate() {
-		console.log(this.props.mountedID)
-		if ( this.props.mountedID !== "" ) {
+		
+		if ( this.props.mountedID !== undefined ) {
 
 			if ( this.state.mountedID === "" ) {
-				let mountedID = '#' + this.props.mountedID
-				let mountedDiv = document.querySelector(mountedID);
-				console.log(mountedDiv)
+				let mountedDiv = document.getElementById(this.props.mountedID);
+				
+				if ( mountedDiv !== null ) {
+					this.setState({convoDiv: mountedDiv, mountedID: this.props.mountedID})
+				}
+				
 			}
 			
 		}
 		
 		if ( this.state.convoDiv !== "" ) {
+			console.log(this.state.convoDiv)
 			this.state.convoDiv.style.background = "#6C00F6"
 			this.state.convoDiv.style.color = "white"
 		}
@@ -195,7 +199,7 @@ export default class Messages extends Component {
 			let data = { id: this.props.convoID }
 			
 			axios.post(`/messageFetch/`, data).then((res) =>  {
-				this.setState({Messages: res.data["data"], mountedID: this.props.convoID});
+				this.setState({Messages: res.data["data"], convoID: this.props.convoID, mountedID: this.props.convoID});
 			}) 
 			
 		}
