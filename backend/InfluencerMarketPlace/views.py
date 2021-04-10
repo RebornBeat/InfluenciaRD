@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from .models import UserInfo, Interest, Conversation
+from .models import UserInfo, Interest, Conversation, Message
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 import json
@@ -104,7 +104,7 @@ def initialSearch(request):
                 idList = cleanedList (idList, None, None)
         allSet = allSet.filter(pk__in=idList).order_by('?')
         # Return a dictionary value of all queries in allSet
-        cleanedSet = list(allSet.values('InstaName', 'FollowerCount', 'Cost', 'photo'))
+        cleanedSet = list(allSet.values('InstaName', 'FollowerCount', 'Cost', 'photo', 'user'))
         cleanedSet = cleanedDict (cleanedSet)
         if request.user.username != "":
             cleanedSet["Logged"] = "True"
@@ -166,7 +166,7 @@ def filteredSearch(request):
             else:
                 idList = cleanedList (idList, None, None)
         chainedFilter = chainedFilter.filter(pk__in=idList).order_by('?')
-        filteredJSON = list(chainedFilter.values('InstaName', 'FollowerCount', 'Cost'))
+        filteredJSON = list(chainedFilter.values('InstaName', 'FollowerCount', 'Cost', 'photo', 'user'))
         filteredJSON = cleanedDict (filteredJSON)
         if request.user.username != "":
             filteredJSON["Logged"] = "True"
@@ -175,23 +175,91 @@ def filteredSearch(request):
             filteredJSON["Logged"] = "False"
     return JsonResponse(filteredJSON)
 
+def dataConvertion(messageTime):
+    timeDiff = math.floor((datetime.datetime.now()-messageTime).total_seconds() / 60)
+    difSec = int((datetime.datetime.now()-messageTime).total_seconds())
+    timeString = ""
+    if timeDiff <= 0:
+        print(timeDiff)
+        timeString = str(difSec) + " Sec Ago"
+    if timeDiff > 0:
+        timeString = str(timeDiff) + " Min Ago"
+    if timeDiff >= 60:
+        timeString = str(math.floor(timeDiff/60)) + " Hr Ago"
+    if timeDiff >= 1440:
+        timeString = str(math.floor(timeDiff/1440)) + " Day Ago"
+    if timeDiff >= 43200:
+        timeString = str(math.floor(timeDiff/43200)) + " Mth Ago"
+    return timeString
+         
+@csrf_exempt
+def convoCreate(request):
+    data = json.loads(request.body.decode('utf-8'))
+    if request.method =="POST":
+        recipient = data["data"]["convoUser"]
+        u = User.objects.get(username=request.user.username)
+        recipient = User.objects.get(pk=recipient)
+        convoFilter = Conversation.objects.filter(users=u).filter(users=recipient)
+        convoID = None 
+        if convoFilter.count() != 0:
+            convoID = convoFilter[0].id
+        else:
+            createdConvo = Conversation.objects.create()
+            createdConvo.users.add(recipient, u)
+            convoID = createdConvo.id
+            
+    return JsonResponse({'convoID': convoID})
+
 @csrf_exempt
 def conversationFetch(request):
     u = User.objects.get(username=request.user.username)
     convo = Conversation.objects.filter(users=u)
     convoDict = {}
     for i in convo:
-        userList = []
+        lastMessage = Message.objects.filter(conversation=i).last()
+        try:
+            messageContent = lastMessage.msg_content
+            messageTime = lastMessage.created_at
+            messageTime = dataConvertion(messageTime)
+        except:
+            messageContent = "No Message History"
+            messageTime = "N/A"
+        profilePic = False 
         for ii in list(i.users.all().values("username")):
-            userList.append(ii["username"])
-        convoDict[i.id] = userList
-    convoDict["user"] = request.user.username
+            if ii["username"] != request.user.username:
+                sendingUser = User.objects.get(username=ii["username"])
+                sendingUser = UserInfo.objects.get(user=sendingUser)
+                profilePic = str(sendingUser.photo)
+        convoDict[i.id] = { "profilePic": profilePic, "messageTime": messageTime, "messageContent": messageContent}
+    #ConvoDict = { u.id : { profilePic: "", LastMessage: "", MessageTime: ""}}
+    convoDict["user"] = u.id
     return JsonResponse({'convo': convoDict})
 
 @csrf_exempt
 def messageFetch(request):
-    pass
+    data = json.loads(request.body.decode('utf-8'))
+    if request.method =="POST":
+        convoID = data["id"]
+        convo = Conversation.objects.get(pk=convoID)
+        messageList = list(Message.objects.filter(conversation=convo).values('owner', 'msg_content', 'created_at'))
+        for i in messageList:
+            messageTime = dataConvertion(i['created_at'])
+            i["created_at"] = messageTime
+        messageJSON = { "data": messageList}
+    return JsonResponse(messageJSON)
     
+@csrf_exempt
+def messageSend(request):
+    data = json.loads(request.body.decode('utf-8'))
+    if request.method =="POST":
+        convoID = data["convoID"]
+        userID = data["UserID"]
+        messageCont = data["Chat"]
+        messageTime = datetime.datetime.now()
+        convo = Conversation.objects.get(pk=convoID)
+        u = User.objects.get(pk=userID)
+        Message.objects.create(conversation=convo,owner=u,msg_content=messageCont,created_at=messageTime)
+    return JsonResponse({"status": "accepted"})
 @csrf_exempt
 def socialActivation(request):
     #check if a user has the code in use and if so check if it has expired or not

@@ -4,6 +4,15 @@ import axios from 'axios';
 
 export class DisplayFetch extends Component {
 	
+	onClick (e) {
+		{/* On Contact Click if conversation not created between the two users then start one and pass in convo id to Messages.js fetch convoCreate with target id */} 
+		let data = { convoUser: e.target.id }
+		
+		axios.post(`/convoCreate/`, { data }).then((res) =>  {
+			this.props.parentCallback(res.data.convoID)
+		})
+	}
+	
 	render () {
 		
 		let userList = []
@@ -26,7 +35,8 @@ export class DisplayFetch extends Component {
 								<div className="User_Followers User_Child">{this.props.data[i].FollowerCount}</div>
 								<div className="User_Cost User_Child">${this.props.data[i].Cost}</div>
 								<div className="User_Contact User_Child">
-									<button>Contactar</button>
+								{/* On Contact Click if conversation not created between the two users then start one and pass in convo id to Messages.js */} 
+									<button id={this.props.data[i].user} onClick={this.onClick.bind(this)} >Contactar</button>
 								</div>
 							</div>
 						)
@@ -49,14 +59,14 @@ export class DisplayFetch extends Component {
 						
 						userList.push(
 							<div className="User_Container">
-								<div className="User_Profile_Pic_Container User_Child">
+								<div className="User_Child">
 									<img className="Profile_Pic" src={profileLink}></img>
 								</div>
 								<div className="User_Name User_Child">@{i}</div>
 								<div className="User_Followers User_Child">{this.props.data[i].FollowerCount}</div>
 								<div className="User_Cost User_Child">${this.props.data[i].Cost}</div>
 								<div className="User_Contact User_Child">
-									<button>Contactar</button>
+									<button id={this.props.data[i].user} onClick={this.onClick.bind(this)} >Contactar</button>
 								</div>
 							</div>
 						)
@@ -242,6 +252,11 @@ export default class MarketplaceSearch extends Component {
 		}
 		
 		
+	}
+	
+	callbackFunction = (convoID) => {
+		this.props.parentCallback("Messages", convoID)
+
 	}
 	
 	render () {

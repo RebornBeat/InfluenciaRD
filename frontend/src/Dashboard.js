@@ -7,7 +7,7 @@ import SocialAccounts from './SocialAccounts';
 export default class Dashboard extends Component {
 	constructor(props) {
 	super(props);
-	this.state = {component: "Home"};
+	this.state = {component: "Home", convoID: ""};
 	}
 	
 	componentDidMount() {
@@ -17,13 +17,13 @@ export default class Dashboard extends Component {
 		}
 	}
 	
-	callbackFunction = (componentName) => {
-		this.setState({component: componentName});
+	callbackFunction = (componentName, Extra) => {
+		this.setState({component: componentName, convoID: Extra});
 
 	}
 	
 	onClick (e) {
-		this.setState({component: e.target.innerHTML })
+		this.setState({component: e.target.innerHTML, convoID: "" })
 	}
 	
 	render () {
@@ -69,7 +69,7 @@ export default class Dashboard extends Component {
 						</div>
 						<div id="Main_Content_Container">
 							{ this.state.component == "Home" && <MarketplaceSearch parentCallback = {this.callbackFunction} /> }
-							{ this.state.component == "Messages" && <Messages parentCallback = {this.callbackFunction} /> }
+							{ this.state.component == "Messages" && <Messages parentCallback = {this.callbackFunction} convoID = {this.state.convoID} /> }
 							{ this.state.component == "activateSocial" && <SocialAccounts parentCallback = {this.callbackFunction} /> }
 						</div>
 					</div>

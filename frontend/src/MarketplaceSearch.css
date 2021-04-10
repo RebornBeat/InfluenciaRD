@@ -145,7 +145,6 @@
 	border-color: #6C00F6;
 	border-radius: 50%;
 	border-width: 3px;
-	background: url("./default_image.jpeg") white; 
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -159,6 +158,10 @@
 	padding: 0.6rem 0.8rem;
 	border-radius: 2px;
 	border: none;
+}
+
+.User_Contact button:hover{
+	cursor: pointer;
 }
 
 #MarketPlaceSearch_Error_Container {
