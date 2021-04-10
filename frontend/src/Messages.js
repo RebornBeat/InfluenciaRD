@@ -194,7 +194,9 @@ export default class Messages extends Component {
 	componentDidMount() {
 		
 		{/* Fetech All Conversatins*/} 
-		axios.post(`/conversationFetch/`).then((res) =>  {
+		let data = { status: this.props.convoID }
+		
+		axios.post(`/conversationFetch/`, data).then((res) =>  {
 			this.setState({User: res.data.convo["user"]})
 			delete res.data.convo["user"]
 			this.setState({Conversations: res.data.convo})

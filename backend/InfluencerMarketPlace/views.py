@@ -212,28 +212,34 @@ def convoCreate(request):
 
 @csrf_exempt
 def conversationFetch(request):
-    u = User.objects.get(username=request.user.username)
-    convo = Conversation.objects.filter(users=u)
-    convoDict = {}
-    for i in convo:
-        lastMessage = Message.objects.filter(conversation=i).last()
-        try:
-            messageContent = lastMessage.msg_content
-            messageTime = lastMessage.created_at
-            messageTime = dataConvertion(messageTime)
-        except:
-            messageContent = "No Message History"
-            messageTime = "N/A"
-        profilePic = False 
-        for ii in list(i.users.all().values("username")):
-            if ii["username"] != request.user.username:
-                sendingUser = User.objects.get(username=ii["username"])
-                sendingUser = UserInfo.objects.get(user=sendingUser)
-                profilePic = str(sendingUser.photo)
-        convoDict[i.id] = { "profilePic": profilePic, "messageTime": messageTime, "messageContent": messageContent}
-    #ConvoDict = { u.id : { profilePic: "", LastMessage: "", MessageTime: ""}}
-    convoDict["user"] = u.id
-    return JsonResponse({'convo': convoDict})
+    data = json.loads(request.body.decode('utf-8'))
+    if request.method =="POST":
+        u = User.objects.get(username=request.user.username)
+        convo = Conversation.objects.filter(users=u)
+        convoDict = {}
+        status = data["status"] 
+        for i in convo:
+            lastMessage = Message.objects.filter(conversation=i).last()
+            try:
+                messageContent = lastMessage.msg_content
+                messageTime = lastMessage.created_at
+                messageTime = dataConvertion(messageTime)
+            except:
+                if status != i.id:
+                    i.delete()
+                    continue
+                messageContent = "No Message History"
+                messageTime = "N/A"
+            profilePic = False 
+            for ii in list(i.users.all().values("username")):
+                if ii["username"] != request.user.username:
+                    sendingUser = User.objects.get(username=ii["username"])
+                    sendingUser = UserInfo.objects.get(user=sendingUser)
+                    profilePic = str(sendingUser.photo)
+            convoDict[i.id] = { "profilePic": profilePic, "messageTime": messageTime, "messageContent": messageContent}
+        #ConvoDict = { u.id : { profilePic: "", LastMessage: "", MessageTime: ""}}
+        convoDict["user"] = u.id
+        return JsonResponse({'convo': convoDict})
 
 @csrf_exempt
 def messageFetch(request):
