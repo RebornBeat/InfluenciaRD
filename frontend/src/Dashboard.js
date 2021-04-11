@@ -7,7 +7,7 @@ import SocialAccounts from './SocialAccounts';
 export default class Dashboard extends Component {
 	constructor(props) {
 	super(props);
-	this.state = {component: "Home", convoID: ""};
+	this.state = {component: "Home", convoID: "", componentDiv: ""};
 	}
 	
 	componentDidMount() {
@@ -23,7 +23,24 @@ export default class Dashboard extends Component {
 	}
 	
 	onClick (e) {
-		this.setState({component: e.target.innerHTML, convoID: "" })
+		
+		console.log(e.target)
+		
+		if ( this.state.componentDiv !== e.target) {
+			
+			if ( this.state.componentDiv !== "" ) {
+				this.state.componentDiv.style.background = "white"
+				this.state.componentDiv.style.color = "black"
+			}
+			
+			e.target.style.background = "#6C00F6"
+			e.target.style.color = "white"
+			
+			this.setState({componentDiv: e.target})
+			
+		}
+		
+		this.setState({component: e.target.innerHTML, convoID: ""})
 	}
 	
 	render () {
