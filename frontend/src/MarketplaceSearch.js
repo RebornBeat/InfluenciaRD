@@ -269,13 +269,13 @@ export default class MarketplaceSearch extends Component {
 						<div className="Seguidores_Costo_Title"># de seguidores</div>
 						<div className="Section_Containers Follower_Filter">
 							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >0-500</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >501-5m</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >5m-20m</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >501-5k</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >5k-20k</div>
 						</div>
 						<div className="Section_Containers Follower_Filter">
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >20m-50m</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >50m-100m</div>
-							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >100m-500m</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >20k-50k</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >50k-100k</div>
+							<div className="Section_Content_Containers" onClick={this.onClick.bind(this)} onMouseOver={this.onMouseOver.bind(this)} onMouseOut={this.onMouseOut.bind(this)} >100k-500k</div>
 						</div>
 					</div>
 					<div id="Interest_Container">

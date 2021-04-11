@@ -76,9 +76,42 @@ def cleanedList (idList, seenUsers, Logged):
             idList = idList[0:idLen]
     return idList
 
+def convertCost(cleanedI):
+    costStr = str(cleanedI["Cost"])
+    
+    if len(costStr) > 3:
+        
+        if len(costStr) == 4:
+            
+            if costStr[1] != 0:
+                cleanedI["Cost"] = costStr[0] + "." + costStr[1] + "k"
+            else:
+                cleanedI["Cost"] = costStr[0] + "k"
+                
+        if len(costStr) == 5:
+            if costStr[3] != 0:
+                cleanedI["Cost"] = costStr[:2] + "." + costStr[3] + "k"
+            else:
+                cleanedI["Cost"] = costStr[:2] + "k"
+                
+        if len(costStr) == 6:
+            if costStr[4] != 0:
+                cleanedI["Cost"] = costStr[:3] + "." + costStr[4] + "k"
+            else:
+                cleanedI["Cost"] = costStr[:3] + "k"
+                
+        if len(costStr) == 7:
+            if costStr[1] != 0:
+                cleanedI["Cost"] = costStr[0] + "." + costStr[1] + "m"
+            else:
+                cleanedI["Cost"] = costStr[0] + "m"
+                
+    pass
+
 def cleanedDict (cleanedSet):
     cleanedJSON = {}
     for i in cleanedSet:
+        convertCost(i)
         cleanedJSON[i["InstaName"]] = i
     return cleanedJSON
 
@@ -126,11 +159,11 @@ def filteredSearch(request):
                 Lteendslice = len(i)
                 LteNumber = i[Ltestartslice:Lteendslice]
                 addedK = "000"
-                if "m" in GteNumber:
-                    GteNumber = GteNumber.replace("m", "")
+                if "k" in GteNumber:
+                    GteNumber = GteNumber.replace("k", "")
                     GteNumber = int(GteNumber + addedK)
-                if "m" in LteNumber:
-                    LteNumber = LteNumber.replace("m", "")
+                if "k" in LteNumber:
+                    LteNumber = LteNumber.replace("k", "")
                     LteNumber = int(LteNumber + addedK)
                 chainedFilter = chainedFilter.filter(FollowerCount__range=(GteNumber, LteNumber))
         if len(data["selectedFiltersInterest"]) != 0:
@@ -146,11 +179,11 @@ def filteredSearch(request):
                 Lteendslice = len(i)
                 LteNumber = i[Ltestartslice:Lteendslice]
                 addedK = "000"
-                if "m" in GteNumber:
-                    GteNumber = GteNumber.replace("m", "")
+                if "k" in GteNumber:
+                    GteNumber = GteNumber.replace("k", "")
                     GteNumber = int(GteNumber + addedK)
-                if "m" in LteNumber:
-                    LteNumber = LteNumber.replace("m", "")
+                if "k" in LteNumber:
+                    LteNumber = LteNumber.replace("k", "")
                     LteNumber = int(LteNumber + addedK)
                 chainedFilter = chainedFilter.filter(Cost__range=(GteNumber, LteNumber))
         idList = list(chainedFilter.values_list('id', flat=True))
