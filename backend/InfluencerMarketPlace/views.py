@@ -76,6 +76,36 @@ def cleanedList (idList, seenUsers, Logged):
             idList = idList[0:idLen]
     return idList
 
+def convertFollowers(cleanedI):
+    costStr = str(cleanedI["FollowerCount"])
+    
+    if len(costStr) > 3:
+        
+        if len(costStr) == 4:
+            
+            if costStr[1] != 0:
+                cleanedI["FollowerCount"] = costStr[0] + "." + costStr[1] + "k"
+            else:
+                cleanedI["FollowerCount"] = costStr[0] + "k"
+                
+        if len(costStr) == 5:
+            if costStr[3] != 0:
+                cleanedI["FollowerCount"] = costStr[:2] + "." + costStr[3] + "k"
+            else:
+                cleanedI["FollowerCount"] = costStr[:2] + "k"
+                
+        if len(costStr) == 6:
+            if costStr[4] != 0:
+                cleanedI["FollowerCount"] = costStr[:3] + "." + costStr[4] + "k"
+            else:
+                cleanedI["FollowerCount"] = costStr[:3] + "k"
+                
+        if len(costStr) == 7:
+            if costStr[1] != 0:
+                cleanedI["FollowerCount"] = costStr[0] + "." + costStr[1] + "m"
+            else:
+                cleanedI["FollowerCount"] = costStr[0] + "m"
+
 def convertCost(cleanedI):
     costStr = str(cleanedI["Cost"])
     
@@ -105,13 +135,12 @@ def convertCost(cleanedI):
                 cleanedI["Cost"] = costStr[0] + "." + costStr[1] + "m"
             else:
                 cleanedI["Cost"] = costStr[0] + "m"
-                
-    pass
 
 def cleanedDict (cleanedSet):
     cleanedJSON = {}
     for i in cleanedSet:
         convertCost(i)
+        convertFollowers(i)
         cleanedJSON[i["InstaName"]] = i
     return cleanedJSON
 
