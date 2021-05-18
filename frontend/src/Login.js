@@ -56,7 +56,10 @@ export default class Login extends Component {
 						<div id="Login__Title_Container">
 							{/* If exit button clicked exit out of login display */} 
 							<span id="Login_Exit" className="exit" onClick={this.onClick.bind(this)} ></span>
-							<span> Login </span>
+							<div id="Portal_Title_Wrapper">
+								<span> Login </span>
+							</div>
+							
 						</div>
 						<div id="Login_Info_Container">
 							<input type="text" id="Email_Input" placeholder="E-mail" onChange={this.handleChange.bind(this)} ></input>

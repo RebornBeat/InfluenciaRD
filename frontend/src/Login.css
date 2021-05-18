@@ -29,12 +29,12 @@
 	position: absolute;
 	top: 2vh;
 	right: 2vw;
-	width: 1.5vw;
+	width: 2vw;
 	height: 3vh;
 	display: block;
 	background: url("./exit.svg");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
 }
 
 .exit:hover {
@@ -49,8 +49,19 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: white;
 }
+
+#Portal_Title_Wrapper {
+	width: 8vw;
+	height: 4vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: white;
+	border: solid;
+	border-color: #6C00F6;
+}
+
 
 #Login_Info_Container {
 	width: 30vw;
