@@ -9,10 +9,10 @@
 
 #Login_Container {
 	position: fixed;
-	top: 20vh;
+	top: 27.5vh;
 	left:35vw;
 	width: 30vw;
-	height: 60vh;
+	height: 45vh;
 	background-color: white;
 	background: url("./Secondary_Background.svg") white; 
     background-position: center;
@@ -43,7 +43,7 @@
 
 #Login__Title_Container {
 	width: 30vw;
-	height: 15vh;
+	height: 10vh;
 	font-size: 1.1rem;
 	font-weight: 500;
 	display: flex;
@@ -59,7 +59,7 @@
 	justify-content: center;
 	background: white;
 	border: solid;
-	border-color: #6C00F6;
+	border-color: black;
 }
 
 
@@ -69,16 +69,18 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: space-around;
+	justify-content: space-evenly;
 }
 
 #Login_Info_Container input {
 	width: 16vw;
+	height: 3vh;
+	border-color: black;
 }
 
 #Login_Links_Container {
 	width: 17vw;
-	height: 10vh;
+	height: 5vh;
 }
 
 #Login_Links_Container span {
@@ -92,7 +94,7 @@
 
 #Login__Button_Container {
 	width: 30vw;
-	height: 15vh;
+	height: 10vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
