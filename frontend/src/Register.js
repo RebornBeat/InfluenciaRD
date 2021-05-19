@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './Login.css';
+import './Register.css';
 import Error from './Error';
 
 export default class Register extends Component {
@@ -31,7 +31,7 @@ export default class Register extends Component {
 	}
 	
 	onClick (e) {
-		if ( e.target.id === "Login_Exit" ) {
+		if ( e.target.id === "Register_Exit" ) {
 			this.props.parentCallback("Home");
 		}
 		
@@ -56,15 +56,17 @@ export default class Register extends Component {
 		
 		return (
 			<>
-				<div id="Login_Overlay">
+				<div id="Register_Overlay">
 					{ this.state.Error != "" && <Error ErrorMsg = {this.state.Error} /> }
-					<div id="Login_Container">
-						<div id="Login__Title_Container">
-							{/* If exit button clicked exit out of login display */} 
-							<span id="Login_Exit" className="exit" onClick={this.onClick.bind(this)} ></span>
-							<span> Register </span>
+					<div id="Register_Container">
+						<div id="Register__Title_Container">
+							{/* If exit button clicked exit out of Register display */} 
+							<span id="Register_Exit" className="exit" onClick={this.onClick.bind(this)} ></span>
+							<div id="Portal_Title_Wrapper">
+								<span> Register </span>
+							</div>
 						</div>
-						<div id="Login_Info_Container">
+						<div id="Register_Info_Container">
 							<input type="text" id="Email_Input" placeholder="E-mail" onChange={this.handleChange.bind(this)} ></input>
 							<input type="text" id="FName" placeholder="Full Name" onChange={this.handleChange.bind(this)} ></input>
 							<input type="text" id="Password_Input" placeholder="Password" onChange={this.handleChange.bind(this)} ></input>

@@ -1,4 +1,4 @@
-#Login_Overlay {
+#Register_Overlay {
 	position: fixed;
 	top:0;
 	left:0;
@@ -7,7 +7,7 @@
 	background-color: rgba(0, 0, 0, 0.8);
 }
 
-#Login_Container {
+#Register_Container {
 	position: fixed;
 	top: 27.5vh;
 	left:35vw;
@@ -41,7 +41,7 @@
 	cursor: pointer;
 }
 
-#Login__Title_Container {
+#Register__Title_Container {
 	width: 30vw;
 	height: 10vh;
 	font-size: 1.1rem;
@@ -63,59 +63,38 @@
 }
 
 
-#Login_Info_Container {
+#Register_Info_Container {
 	width: 30vw;
-	height: 20vh;
+	height: 25vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-evenly;
 }
 
-#Login_Info_Container input {
+#Register_Info_Container input {
 	width: 16vw;
 	height: 3vh;
 	border-color: #6C00F6;
 }
 
-#Login_Links_Container {
+#Register_Links_Container {
 	width: 17vw;
 	height: 5vh;
 }
 
-#Login_Links_Container span {
+#Register_Links_Container span {
 	font-size: 0.7rem;
 	color: blue;
 }
 
-#Login_Links_Container span:hover {
-	cursor: pointer;
-}
-
-#Login__Button_Container {
-	width: 30vw;
-	height: 10vh;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-evenly;
-}
-
-#Login__Button_Container button {
-	background-color: #6C00F6;
-	font-weight: 500;
-	color: white;
-	padding: 4px 16px;
-	border-radius: 4px;
-}
-
-#Login__Button_Container button:hover {
+#Register_Links_Container span:hover {
 	cursor: pointer;
 }
 
 #Register__Button_Container {
 	width: 30vw;
-	height: 25vh;
+	height: 10vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -133,3 +112,4 @@
 #Register__Button_Container button:hover {
 	cursor: pointer;
 }
+
