@@ -53,21 +53,66 @@ export class ConvoDisplay extends Component {
 		
 		if ( convoID !== this.props.convoID ) {
 			
-			if ( this.state.convoDiv !== "" ) {
-				this.state.convoDiv.style.background = "white"
-				this.state.convoDiv.style.color = "black"
+			if ( parentDiv.id !== "Message_Information_Container" ) {
+			
+				if ( this.state.convoDiv !== "" ) {
+					this.state.convoDiv.style.background = "white"
+					this.state.convoDiv.style.color = "black"
+				}
+				
+				this.setState({convoDiv: parentDiv, topPOS: ""})
+				
+				let data = { id: convoID }
+				
+				axios.post(`/messageFetch/`, data).then((res) =>  {
+					this.props.parentCallback(res.data["data"], convoID)
+				}) 
+				
 			}
 			
-			this.setState({convoDiv: parentDiv, topPOS: ""})
+		}
+	
+	}
+	
+	onHover (e) {
+		
+		let parentDiv = undefined
+		
+		if ( e.target.parentElement.id === "" ) {
+			parentDiv = e.target.parentElement.parentElement
+		} else {
+			parentDiv = e.target.parentElement
+		}
+		
+		if ( parentDiv.id !== "Message_Information_Container" ) {
 			
-			let data = { id: convoID }
-			
-			axios.post(`/messageFetch/`, data).then((res) =>  {
-				this.props.parentCallback(res.data["data"], convoID)
-			}) 
+			parentDiv.style.background = "#6C00F6"
+			parentDiv.style.color = "white"
 			
 		}
 		
+	}
+	
+	outHover (e) {
+		
+		let parentDiv = undefined
+		
+		if ( e.target.parentElement.id === "" ) {
+			parentDiv = e.target.parentElement.parentElement
+		} else {
+			parentDiv = e.target.parentElement
+		}
+
+		if ( parentDiv.id !== "Message_Information_Container" ) {
+			
+			if ( parentDiv !== this.state.convoDiv ) {
+				
+				parentDiv.style.background = "white"
+				parentDiv.style.color = "black"
+				
+			}
+			
+		}
 	}
 	
 	render () {
@@ -81,7 +126,7 @@ export class ConvoDisplay extends Component {
 				let profileLink = 'http://127.0.0.1:8000/media/' + this.props.Convos[i].profilePic
 				
 				convoList.push(
-					<div className="Message_Information_Wrapper" id={i} onClick={this.onClick.bind(this)}>
+					<div className="Message_Information_Wrapper" id={i} onClick={this.onClick.bind(this)} onMouseOver={this.onHover.bind(this)} onMouseOut={this.outHover.bind(this)}>
 						<div className="Convo_Child">
 							<img className="Convo_Pic" src={profileLink}></img>
 						</div>
@@ -175,9 +220,14 @@ export class MessageDisplay extends Component {
 		return (
 			<>
 				{msgList}
-				<div id="Message_Chat_Wrapper">
-					<input type="text" id="Chat_Input" placeholder="Send A Message" onChange={this.handleChange.bind(this)} ></input>
-					<div id="Chat_Send" onClick={this.onClick.bind(this)} ></div>
+				<div id="Message_Function_Container">
+					<div id="Message_Chat_Wrapper">
+						<input type="text" id="Chat_Input" placeholder="Send A Message" onChange={this.handleChange.bind(this)} ></input>
+						<div id="Chat_Send" onClick={this.onClick.bind(this)} ></div>
+					</div>
+					<div id="Message_Order_Container">
+						<span> Ordenar </span>
+					</div>
 				</div>
 			</>
 		)

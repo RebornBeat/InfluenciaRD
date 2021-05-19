@@ -150,22 +150,30 @@
 	font-size: 0.7rem;
 }
 
-#Message_Chat_Wrapper {
+#Message_Function_Container {
 	position: relative;
 	width: 40vw;
 	height: 7vh;
 	left: 5vw;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	margin-bottom: 2vh;
+}
+
+#Message_Chat_Wrapper {
+	width: 30vw;
+	height: 7vh;
 	background: white;
 	border: solid;
 	border-width: 3px;
 	border-radius: 3px;
 	border-color: #6C00F6;
-	margin-bottom: 1vh;
 	display: flex;
 }
 
 #Chat_Input {
-	width: 35vw;
+	width: 25vw;
 	height: 7vh;
 	outline: none;
     border: none;
@@ -182,5 +190,24 @@
 }
 
 #Chat_Send:hover {
+	cursor: pointer;
+}
+
+#Message_Order_Container {
+	width: 5vw;
+	height: 7vh;
+	background: white;
+	border: solid;
+	border-width: 3px;
+	border-radius: 3px;
+	border-color: #6C00F6;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight:500;
+	font-size: 0.9rem;
+}
+
+#Message_Order_Container:hover {
 	cursor: pointer;
 }
