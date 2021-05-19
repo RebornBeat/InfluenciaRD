@@ -65,7 +65,7 @@ export class ConvoDisplay extends Component {
 				let data = { id: convoID }
 				
 				axios.post(`/messageFetch/`, data).then((res) =>  {
-					this.props.parentCallback(res.data["data"], convoID)
+					this.props.parentCallback("ConvoFetch", res.data["data"], convoID)
 				}) 
 				
 			}
@@ -119,8 +119,6 @@ export class ConvoDisplay extends Component {
 		
 		let convoList = []
 		
-		console.log(this.props.Convos)
-		
 		if ( Object.keys(this.props.Convos).length > 0 )  {
 			
 			for ( let i in this.props.Convos ) {
@@ -170,17 +168,32 @@ export class MessageDisplay extends Component {
 	}
 	
 	onClick (e) {
-		let data = { UserID: this.props.userID, Chat: this.state.ChatText, convoID: this.props.convoID }
 		
-		axios.post(`/messageSend/`, data).then((res) =>  {
+		
+		if ( e.target.id === "Chat_Send" ) {
+		
+			if ( this.state.ChatText !== "" ) { 
 			
-			let data = { id: this.props.convoID }
+				let data = { UserID: this.props.userID, Chat: this.state.ChatText, convoID: this.props.convoID }
+				
+				axios.post(`/messageSend/`, data).then((res) =>  {
+					
+					let data = { id: this.props.convoID }
+					
+					axios.post(`/messageFetch/`, data).then((res) =>  {
+						this.props.parentCallback(res.data["data"], this.props.convoID )
+					}) 
+					
+				}) 
 			
-			axios.post(`/messageFetch/`, data).then((res) =>  {
-				this.props.parentCallback(res.data["data"], this.props.convoID )
-			}) 
+			}
 			
-		}) 
+		}
+		
+		if ( e.target.id === "Message_Options_Container") {
+			this.props.parentCallback("Options", undefined, this.props.convoID )
+		}
+		
 	}
 	
 	handleChange (e) {
@@ -226,7 +239,7 @@ export class MessageDisplay extends Component {
 			<>
 				{msgList}
 				<div id="Message_Chat_Wrapper">
-					<div id="Message_Order_Container"></div>
+					<div id="Message_Options_Container" onClick={this.onClick.bind(this)} ></div>
 					<input type="text" id="Chat_Input" placeholder="Send A Message" onChange={this.handleChange.bind(this)} ></input>
 					<div id="Chat_Send" onClick={this.onClick.bind(this)} ></div>
 				</div>
@@ -236,10 +249,44 @@ export class MessageDisplay extends Component {
 	}
 }
 
+export class OptionsDisplay extends Component {
+	
+	constructor(props) {
+		super(props);
+		this.state = {ChatText: ""};
+	}
+	
+	onClick (e) {
+		this.props.parentCallback(undefined, undefined, undefined)
+	}
+	
+	handleChange (e) {
+		this.setState({ChatText: e.target.value})
+	}
+	
+	render () {
+		
+		return (
+		
+			<div id="Message_Information_Overlay">
+				<span id="Login_Exit" className="exit" onClick={this.onClick.bind(this)} ></span>
+				<div className="Message_Information_Overlay_Container">
+					<span> Crear Orden </span>
+				</div>
+				<div className="Message_Information_Overlay_Container"> 
+					<span> Reportar </span>
+				</div>
+			</div> 
+			
+		)
+
+	}
+}
+
 export default class Messages extends Component {
 	constructor(props) {
 	super(props);
-	this.state = {Conversations: "", Messages: "", User: "", convoID: "", MountedID: "", Username: ""};
+	this.state = {Conversations: "", Messages: "", User: "", convoID: "", MountedID: "", Username: "", Function: ""};
 	}
 	
 	componentDidMount() {
@@ -266,13 +313,26 @@ export default class Messages extends Component {
 		
 	}
 	
-	callbackFunction = (data, ID) => {
-		this.setState({Messages: data, convoID: ID});
+	callbackFunction = (action, data, ID) => {
 		
-		axios.post(`/conversationFetch/`).then((res) =>  {
-			delete res.data.convo["user"]
-			this.setState({Conversations: res.data.convo})
-		})
+		this.setState({Function: ""})
+		
+		
+		if ( action === "ConvoFetch" ) {
+			
+			this.setState({Messages: data, convoID: ID});
+			
+			axios.post(`/conversationFetch/`).then((res) =>  {
+				delete res.data.convo["user"]
+				this.setState({Conversations: res.data.convo})
+			})
+			
+		}
+		
+		if ( action === "Options" ) {
+			this.setState({Function: "Options"})
+		}
+		
 		
 	}
 	
@@ -286,7 +346,8 @@ export default class Messages extends Component {
 				<div id="Message_Content_Container">
 					<div id="Message_Outer_Wrapper">
 						{ this.state.Messages !== "" && <MessageDisplay Msgs = {this.state.Messages} userID = {this.state.User} convoID = {this.state.convoID} parentCallback = {this.callbackFunction} /> }
-						{ this.state.Messages === "" && <div id="Message_No_Selection">No Conversation Selected</div> }
+						{ this.state.Messages === "" && <div id="Message_Information_Overlay">No Conversation Selected</div> }
+						{ this.state.Function !== "" && <OptionsDisplay parentCallback = {this.callbackFunction} />}
 					</div>
 				</div>
 			</>
