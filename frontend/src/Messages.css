@@ -42,6 +42,10 @@
 	font-weight: 500;
 }
 
+.Convo_Child_Text_Wrapper {
+	flex-direction: column;
+}
+
 .Convo_Pic{
 	height: 3rem;
 	width: 3rem;
@@ -60,6 +64,11 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	text-align: center;
+	font-weight: 400;
+}
+
+.Convo_Child_Text_Title {
 	font-weight: 500;
 }
 
@@ -150,30 +159,38 @@
 	font-size: 0.7rem;
 }
 
-#Message_Function_Container {
+
+#Message_Chat_Wrapper {
 	position: relative;
 	width: 40vw;
 	height: 7vh;
 	left: 5vw;
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
-	margin-bottom: 2vh;
-}
-
-#Message_Chat_Wrapper {
-	width: 30vw;
-	height: 7vh;
 	background: white;
 	border: solid;
 	border-width: 3px;
 	border-radius: 3px;
 	border-color: #6C00F6;
 	display: flex;
+	align-items:center;
+	justify-content: space-around;
+	margin-bottom: 2vh;
+}
+
+#Message_Order_Container {
+	width: 2vw;
+	height: 2.5vh;
+	background: url("./More_Options.svg"); 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#Message_Order_Container:hover {
+	cursor: pointer;
 }
 
 #Chat_Input {
-	width: 25vw;
+	width: 33vw;
 	height: 7vh;
 	outline: none;
     border: none;
@@ -181,33 +198,15 @@
 }
 
 #Chat_Send {
-	width: 5vw;
-	height: 7vh;
+	width: 2vw;
+	height: 2.5vh;
 	background: url("./Chat_Send.svg") white; 
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 1.3rem;
+    background-size: contain;
 }
 
 #Chat_Send:hover {
 	cursor: pointer;
 }
 
-#Message_Order_Container {
-	width: 5vw;
-	height: 7vh;
-	background: white;
-	border: solid;
-	border-width: 3px;
-	border-radius: 3px;
-	border-color: #6C00F6;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-weight:500;
-	font-size: 0.9rem;
-}
-
-#Message_Order_Container:hover {
-	cursor: pointer;
-}

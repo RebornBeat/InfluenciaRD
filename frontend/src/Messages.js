@@ -119,6 +119,8 @@ export class ConvoDisplay extends Component {
 		
 		let convoList = []
 		
+		console.log(this.props.Convos)
+		
 		if ( Object.keys(this.props.Convos).length > 0 )  {
 			
 			for ( let i in this.props.Convos ) {
@@ -130,7 +132,10 @@ export class ConvoDisplay extends Component {
 						<div className="Convo_Child">
 							<img className="Convo_Pic" src={profileLink}></img>
 						</div>
-						<div className="Convo_Child">
+						<div className="Convo_Child Convo_Child_Text_Wrapper">
+							<div className="Convo_Child_Text Convo_Child_Text_Title">
+								@{this.props.Convos[i].username}
+							</div>
 							<div className="Convo_Child_Text">
 								{this.props.Convos[i].messageContent}
 							</div>
@@ -220,14 +225,10 @@ export class MessageDisplay extends Component {
 		return (
 			<>
 				{msgList}
-				<div id="Message_Function_Container">
-					<div id="Message_Chat_Wrapper">
-						<input type="text" id="Chat_Input" placeholder="Send A Message" onChange={this.handleChange.bind(this)} ></input>
-						<div id="Chat_Send" onClick={this.onClick.bind(this)} ></div>
-					</div>
-					<div id="Message_Order_Container">
-						<span> Ordenar </span>
-					</div>
+				<div id="Message_Chat_Wrapper">
+					<div id="Message_Order_Container"></div>
+					<input type="text" id="Chat_Input" placeholder="Send A Message" onChange={this.handleChange.bind(this)} ></input>
+					<div id="Chat_Send" onClick={this.onClick.bind(this)} ></div>
 				</div>
 			</>
 		)
@@ -238,16 +239,16 @@ export class MessageDisplay extends Component {
 export default class Messages extends Component {
 	constructor(props) {
 	super(props);
-	this.state = {Conversations: "", Messages: "", User: "", convoID: "", MountedID: ""};
+	this.state = {Conversations: "", Messages: "", User: "", convoID: "", MountedID: "", Username: ""};
 	}
 	
 	componentDidMount() {
 		
-		{/* Fetech All Conversatins*/} 
+		{/* Fetch All Conversations*/} 
 		let data = { status: this.props.convoID }
 		
 		axios.post(`/conversationFetch/`, data).then((res) =>  {
-			this.setState({User: res.data.convo["user"]})
+			this.setState({User: res.data.convo["user"], Username: res.data.convo["username"]})
 			delete res.data.convo["user"]
 			this.setState({Conversations: res.data.convo})
 		}) 
@@ -280,7 +281,7 @@ export default class Messages extends Component {
 		return (
 			<>
 				<div id="Message_Information_Container">
-					<ConvoDisplay Convos = {this.state.Conversations} parentCallback = {this.callbackFunction} mountedID = {this.state.mountedID} />
+					<ConvoDisplay Convos = {this.state.Conversations} parentCallback = {this.callbackFunction} mountedID = {this.state.mountedID} username = {this.state.Username} />
 				</div>
 				<div id="Message_Content_Container">
 					<div id="Message_Outer_Wrapper">

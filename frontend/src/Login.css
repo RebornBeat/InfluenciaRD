@@ -75,6 +75,7 @@
 #Login_Info_Container input {
 	width: 16vw;
 	height: 3vh;
+	border-radius: 2.5px;
 	border-color: #6C00F6;
 }
 

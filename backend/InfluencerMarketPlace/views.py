@@ -45,7 +45,7 @@ def register_request(request):
                     startslice = data["Email"].find("@")
                     endslice = len(data["Email"])
                     slicedemail = data["Email"][startslice:endslice]
-                    if "." in slicedemail:  
+                    if "." in slicedemail:
                         User.objects.create_user(username=data["Email"], password=data["Pass"])
                         user = authenticate(request, username=data["Email"], password=data["Pass"])
                         if user is not None:
@@ -78,28 +78,28 @@ def cleanedList (idList, seenUsers, Logged):
 
 def convertFollowers(cleanedI):
     costStr = str(cleanedI["FollowerCount"])
-    
+
     if len(costStr) > 3:
-        
+
         if len(costStr) == 4:
-            
+
             if costStr[1] != 0:
                 cleanedI["FollowerCount"] = costStr[0] + "." + costStr[1] + "k"
             else:
                 cleanedI["FollowerCount"] = costStr[0] + "k"
-                
+
         if len(costStr) == 5:
             if costStr[3] != 0:
                 cleanedI["FollowerCount"] = costStr[:2] + "." + costStr[3] + "k"
             else:
                 cleanedI["FollowerCount"] = costStr[:2] + "k"
-                
+
         if len(costStr) == 6:
             if costStr[4] != 0:
                 cleanedI["FollowerCount"] = costStr[:3] + "." + costStr[4] + "k"
             else:
                 cleanedI["FollowerCount"] = costStr[:3] + "k"
-                
+
         if len(costStr) == 7:
             if costStr[1] != 0:
                 cleanedI["FollowerCount"] = costStr[0] + "." + costStr[1] + "m"
@@ -108,28 +108,28 @@ def convertFollowers(cleanedI):
 
 def convertCost(cleanedI):
     costStr = str(cleanedI["Cost"])
-    
+
     if len(costStr) > 3:
-        
+
         if len(costStr) == 4:
-            
+
             if costStr[1] != 0:
                 cleanedI["Cost"] = costStr[0] + "." + costStr[1] + "k"
             else:
                 cleanedI["Cost"] = costStr[0] + "k"
-                
+
         if len(costStr) == 5:
             if costStr[3] != 0:
                 cleanedI["Cost"] = costStr[:2] + "." + costStr[3] + "k"
             else:
                 cleanedI["Cost"] = costStr[:2] + "k"
-                
+
         if len(costStr) == 6:
             if costStr[4] != 0:
                 cleanedI["Cost"] = costStr[:3] + "." + costStr[4] + "k"
             else:
                 cleanedI["Cost"] = costStr[:3] + "k"
-                
+
         if len(costStr) == 7:
             if costStr[1] != 0:
                 cleanedI["Cost"] = costStr[0] + "." + costStr[1] + "m"
@@ -253,7 +253,7 @@ def dataConvertion(messageTime):
     if timeDiff >= 43200:
         timeString = str(math.floor(timeDiff/43200)) + " Mth Ago"
     return timeString
-         
+
 @csrf_exempt
 def convoCreate(request):
     data = json.loads(request.body.decode('utf-8'))
@@ -262,14 +262,14 @@ def convoCreate(request):
         u = User.objects.get(username=request.user.username)
         recipient = User.objects.get(pk=recipient)
         convoFilter = Conversation.objects.filter(users=u).filter(users=recipient)
-        convoID = None 
+        convoID = None
         if convoFilter.count() != 0:
             convoID = convoFilter[0].id
         else:
             createdConvo = Conversation.objects.create()
             createdConvo.users.add(recipient, u)
             convoID = createdConvo.id
-            
+
     return JsonResponse({'convoID': convoID})
 
 @csrf_exempt
@@ -279,7 +279,7 @@ def conversationFetch(request):
         u = User.objects.get(username=request.user.username)
         convo = Conversation.objects.filter(users=u)
         convoDict = {}
-        status = data["status"] 
+        status = data["status"]
         for i in convo:
             lastMessage = Message.objects.filter(conversation=i).last()
             try:
@@ -292,13 +292,14 @@ def conversationFetch(request):
                     continue
                 messageContent = "No Message History"
                 messageTime = "N/A"
-            profilePic = False 
+            profilePic = False
             for ii in list(i.users.all().values("username")):
                 if ii["username"] != request.user.username:
                     sendingUser = User.objects.get(username=ii["username"])
                     sendingUser = UserInfo.objects.get(user=sendingUser)
                     profilePic = str(sendingUser.photo)
-            convoDict[i.id] = { "profilePic": profilePic, "messageTime": messageTime, "messageContent": messageContent}
+                    username = sendingUser.InstaName
+            convoDict[i.id] = {"username": username, "profilePic": profilePic, "messageTime": messageTime, "messageContent": messageContent}
         #ConvoDict = { u.id : { profilePic: "", LastMessage: "", MessageTime: ""}}
         convoDict["user"] = u.id
         return JsonResponse({'convo': convoDict})
@@ -315,7 +316,7 @@ def messageFetch(request):
             i["created_at"] = messageTime
         messageJSON = { "data": messageList}
     return JsonResponse(messageJSON)
-    
+
 @csrf_exempt
 def messageSend(request):
     data = json.loads(request.body.decode('utf-8'))
@@ -349,7 +350,7 @@ def socialActivation(request):
             if u.activationCode != "":
                 #check if the hour expire
                 timeDiff = math.floor((datetime.datetime.now()-u.activationTime).total_seconds() / 60)
-                if timeDiff > 60:        
+                if timeDiff > 60:
                     u.activationCode = code
                     u.activationTime = datetime.datetime.now()
                     u.save()
