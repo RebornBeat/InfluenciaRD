@@ -81,6 +81,14 @@
 	border-color: #6C00F6;
 }
 
+#Register_Info_Container select {
+	width: 16.5vw;
+	height: 3.5vh;
+	border-width: 2px;
+	border-radius: 2.5px;
+	border-color: #6C00F6;
+}
+
 #Register_Links_Container {
 	width: 17vw;
 	height: 5vh;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Messages.css';
 import axios from 'axios';
+import OptionsController from './Options';
 
 export class ConvoDisplay extends Component {
 	
@@ -249,40 +250,6 @@ export class MessageDisplay extends Component {
 	}
 }
 
-export class OptionsDisplay extends Component {
-	
-	constructor(props) {
-		super(props);
-		this.state = {ChatText: ""};
-	}
-	
-	onClick (e) {
-		this.props.parentCallback(undefined, undefined, undefined)
-	}
-	
-	handleChange (e) {
-		this.setState({ChatText: e.target.value})
-	}
-	
-	render () {
-		
-		return (
-		
-			<div id="Message_Information_Overlay">
-				<span id="Login_Exit" className="exit" onClick={this.onClick.bind(this)} ></span>
-				<div className="Message_Information_Overlay_Container">
-					<span> Crear Orden </span>
-				</div>
-				<div className="Message_Information_Overlay_Container"> 
-					<span> Reportar </span>
-				</div>
-			</div> 
-			
-		)
-
-	}
-}
-
 export default class Messages extends Component {
 	constructor(props) {
 	super(props);
@@ -347,7 +314,7 @@ export default class Messages extends Component {
 					<div id="Message_Outer_Wrapper">
 						{ this.state.Messages !== "" && <MessageDisplay Msgs = {this.state.Messages} userID = {this.state.User} convoID = {this.state.convoID} parentCallback = {this.callbackFunction} /> }
 						{ this.state.Messages === "" && <div id="Message_Information_Overlay">No Conversation Selected</div> }
-						{ this.state.Function !== "" && <OptionsDisplay parentCallback = {this.callbackFunction} />}
+						{ this.state.Function !== "" && <OptionsController parentCallback = {this.callbackFunction} />}
 					</div>
 				</div>
 			</>
