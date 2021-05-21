@@ -35,17 +35,24 @@
 
 .Option_Information_Container textarea {
 	width: 30vw;
-	height: 10vh;
+	height: 17vh;
+	border-width: 3px;
+	border-radius: 3px;
+	border-color: #6C00F6;
+}
+
+#hashtag_wrapper {
+	display: flex;
+	width: 30vw;
+	height: 2vh;
+	border: solid;
 	border-width: 3px;
 	border-radius: 3px;
 	border-color: #6C00F6;
 }
 
 .Option_Information_Container input {
-	width: 30vw;
-	border-width: 3px;
-	border-radius: 3px;
-	border-color: #6C00F6;
+	border: none;
 }
 
 #file_container {
@@ -68,6 +75,10 @@
 	background: #6C00F6;
 	color: white;
 	cursor: pointer;
+}
+
+#file_wrapper input {
+	display: none;
 }
 
 #file_link {

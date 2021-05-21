@@ -102,11 +102,15 @@ export class OrderRequirements extends Component {
 	
 	constructor(props) {
 		super(props);
-		this.state = {Details: "", Hashtags: [], Files: []};
+		this.state = {Details: ""};
+		this.fileUpload = React.createRef();
 	}
 	
 	onClick (e) {
-		this.props.parentCallback(undefined, undefined, undefined)
+		
+		if ( e.currentTarget.id === "file_wrapper" ) {
+			this.fileUpload.current.click();
+		}
 	}
 	
 	handleKeyPress (e) {
@@ -144,12 +148,9 @@ export class OrderRequirements extends Component {
 					<span> Detalles del proyecto: </span>
 					<textarea id="details_text"placeholder="Describe el contenido que el influencer va a presentar , sea lo más claro posible." onChange={this.handleChange.bind(this)} />
 				</div>
-				<div id="hashtag_container" className="Option_Information_Container" >
-					<span> Hashtags: </span>
-					<input id="hashtag_input" placeholder="Agregar un hashtag: presione enter para confirmar" onKeyPress={this.handleKeyPress.bind(this)}  />
-				</div>
 				<div id="file_container" className="Option_Information_Container" >
-					<div id="file_wrapper" >
+					<div id="file_wrapper" onClick={this.onClick.bind(this)}>
+						<input type="file" multiple ref={this.fileUpload}/>
 						<span> Subir archivos </span>
 					</div>
 					<span id="file_link"> Mostrar archivos </span>
