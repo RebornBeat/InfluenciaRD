@@ -102,7 +102,7 @@ export class OrderRequirements extends Component {
 	
 	constructor(props) {
 		super(props);
-		this.state = {Details: ""};
+		this.state = {Details: "", Files: [], FileNames: [] } ;
 		this.fileUpload = React.createRef();
 	}
 	
@@ -131,8 +131,24 @@ export class OrderRequirements extends Component {
 			this.setState({Details: e.currentTarget.value})
 		}
 		
-		
-		console.log(this.state.Hashtags)
+		if ( e.currentTarget.id === "file_input" ) {
+
+			if ( e.currentTarget.files.length !== 0 ) {
+				
+				for ( let i = 0; i < e.currentTarget.files.length; i++) {
+					
+					if ( this.state.FileNames.includes(e.currentTarget.files[i].name) === false) {
+						
+						this.state.Files.push(e.currentTarget.files[i])
+						this.state.FileNames.push(e.currentTarget.files[i].name)
+						
+					}
+				}
+				
+			}
+			
+		}
+	
 		
 	}
 	
@@ -150,7 +166,7 @@ export class OrderRequirements extends Component {
 				</div>
 				<div id="file_container" className="Option_Information_Container" >
 					<div id="file_wrapper" onClick={this.onClick.bind(this)}>
-						<input type="file" multiple ref={this.fileUpload}/>
+						<input id="file_input" type="file" multiple ref={this.fileUpload} onChange={this.handleChange.bind(this)} />
 						<span> Subir archivos </span>
 					</div>
 					<span id="file_link"> Mostrar archivos </span>
