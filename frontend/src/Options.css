@@ -1,0 +1,100 @@
+#OrderDisplay_Container {
+	width: 35vw;
+	height: 45vh;
+	background: white;
+	border: solid;
+	border-width: 3px;
+	border-radius: 3px;
+	border-color: #6C00F6;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: black;
+}
+
+.Options_Title_Wrapper {
+	width: 20vw;
+	height: 5vh;
+	margin-top: 2vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: solid;
+	border-width: 3px;
+	border-radius: 3px;
+	border-color: #6C00F6;
+	
+}
+
+.Option_Information_Container {
+	margin-top: 2vh;
+	display: flex;
+	flex-direction: column;
+
+}
+
+.Option_Information_Container textarea {
+	width: 30vw;
+	height: 10vh;
+	border-width: 3px;
+	border-radius: 3px;
+	border-color: #6C00F6;
+}
+
+.Option_Information_Container input {
+	width: 30vw;
+	border-width: 3px;
+	border-radius: 3px;
+	border-color: #6C00F6;
+}
+
+#file_container {
+	align-items: center;
+}
+
+#file_wrapper {
+	width: 10vw;
+	height: 2vw;
+	border: solid;
+	border-width: 3px;
+	border-radius: 3px;
+	border-color: #6C00F6;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#file_wrapper:hover {
+	background: #6C00F6;
+	color: white;
+	cursor: pointer;
+}
+
+#file_link {
+	font-weight: 300;
+	font-size: 0.9rem;
+	color: blue;
+}
+
+#file_link:hover {
+	cursor: pointer;
+}
+
+#Options_Next_Button {
+	width: 10vw;
+	height: 3vh;
+	background: #6C00F6;
+	color: white;
+	margin-top: 2vh;
+	border: solid;
+	border-width: 3px;
+	border-radius: 3px;
+	border-color: #6C00F6;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#Options_Next_Button:hover {
+	cursor: pointer;
+}
